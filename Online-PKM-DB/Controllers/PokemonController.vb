@@ -93,7 +93,7 @@ Namespace Controllers
 
                 context.SaveChanges()
             End Using
-            Return RedirectToAction("Details", newPKMID)
+            Return RedirectToAction("Details", New With {.id = newPKMID})
             'Catch ex As Exception
             '    Return View()
             'End Try
