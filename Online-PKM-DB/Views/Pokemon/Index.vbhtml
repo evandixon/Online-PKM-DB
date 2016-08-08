@@ -70,8 +70,8 @@ End Code
             @Html.DisplayFor(Function(modelItem) item.Move4)
         </td>
         <td>
-            @*@Html.ActionLink("Edit", "Edit", New With {.id = item.PrimaryKey}) |
-            @Html.ActionLink("Details", "Details", New With {.id = item.PrimaryKey}) |
+            @*@Html.ActionLink("Edit", "Edit", New With {.id = item.PrimaryKey}) |*@
+            @Html.ActionLink("Details", "Details", New With {.id = item.PokemonID}) @*|
             @Html.ActionLink("Delete", "Delete", New With {.id = item.PrimaryKey})*@
         </td>
     </tr>

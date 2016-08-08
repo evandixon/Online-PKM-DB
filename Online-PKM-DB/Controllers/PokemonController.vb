@@ -17,7 +17,7 @@ Namespace Controllers
                            From m In p.GeneralMetadata
                            Where f.StandardCode = "PK6"
                            Order By p.UploadDate Descending
-                           Select m).Take(50).AsEnumerable.Select(Function(x) New PK6MetaDataViewModel(x)).ToList
+                           Select New With {.Metadata = m, .PokemonID = p.ID}).Take(50).AsEnumerable.Select(Function(x) New PK6MetaDataViewModel(x.Metadata, x.PokemonID)).ToList
             End Using
             Return View(entries)
         End Function
