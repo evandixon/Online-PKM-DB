@@ -80,6 +80,10 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PKHeX, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\PKHeX\bin\Debug\PKHeX.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -264,12 +268,22 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
     <Compile Include="Controllers\AccountController.vb" />
+    <Compile Include="Controllers\api\AccountController.vb" />
+    <Compile Include="Controllers\ManageController.vb" />
+    <Compile Include="Controllers\PokemonController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountBindingModels.vb" />
+    <Compile Include="Helpers\PKHeXResources.vb" />
+    <Compile Include="Helpers\PkmDBHelper.vb" />
+    <Compile Include="Models\API\AccountBindingModels.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\IdentityModels.vb" />
+    <Compile Include="Models\ManageViewModels.vb" />
+    <Compile Include="Models\Pokemon\PkmDBContext.vb" />
+    <Compile Include="Models\Pokemon\PokemonGeneralMetadata.vb" />
+    <Compile Include="Models\Pokemon\Pokemon.vb" />
+    <Compile Include="Models\Pokemon\PokemonFormat.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -286,10 +300,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
-    <Compile Include="Controllers\ValuesController.vb" />
+    <Compile Include="Controllers\api\ValuesController.vb" />
     <Compile Include="Providers\ApplicationOAuthProvider.vb" />
     <Compile Include="Results\ChallengeResult.vb" />
     <Compile Include="Startup.vb" />
+    <Compile Include="ViewModels\PK6MetaDataViewModel.vb" />
+    <Compile Include="ViewModels\PK6ViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -344,6 +360,27 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Pokemon\Index.vbhtml" />
+    <Content Include="Views\Pokemon\Details.vbhtml" />
+    <Content Include="Views\Pokemon\Create.vbhtml" />
+    <Content Include="Views\Account\ConfirmEmail.vbhtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.vbhtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.vbhtml" />
+    <Content Include="Views\Account\ForgotPassword.vbhtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.vbhtml" />
+    <Content Include="Views\Account\Login.vbhtml" />
+    <Content Include="Views\Account\Register.vbhtml" />
+    <Content Include="Views\Account\ResetPassword.vbhtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.vbhtml" />
+    <Content Include="Views\Account\SendCode.vbhtml" />
+    <Content Include="Views\Account\VerifyCode.vbhtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.vbhtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.vbhtml" />
+    <Content Include="Views\Manage\ChangePassword.vbhtml" />
+    <Content Include="Views\Manage\Index.vbhtml" />
+    <Content Include="Views\Manage\ManageLogins.vbhtml" />
+    <Content Include="Views\Manage\SetPassword.vbhtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -379,7 +416,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <PropertyGroup>
