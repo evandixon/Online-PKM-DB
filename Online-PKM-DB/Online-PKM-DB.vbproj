@@ -81,8 +81,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PKHeX, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\PKHeX\bin\Debug\PKHeX.exe</HintPath>
+      <HintPath>..\packages\PKHeX.1.0.0-CI137\lib\net40\PKHeX.exe</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
