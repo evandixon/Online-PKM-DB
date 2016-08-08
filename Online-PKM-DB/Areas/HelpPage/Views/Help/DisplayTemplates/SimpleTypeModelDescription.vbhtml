@@ -1,0 +1,3 @@
+@Imports Online_PKM_DB.Areas.HelpPage.ModelDescriptions
+@ModelType SimpleTypeModelDescription
+@Model.Documentation
