@@ -32,9 +32,31 @@ Namespace Controllers
                     Return HttpNotFound()
                 End If
 
-                pkm = New PK6ViewModel(New PKHeX.PK6(data))
+                pkm = New PK6ViewModel(New PKHeX.PK6(data), id)
             End Using
             Return View(pkm)
+        End Function
+
+        Function Download(ByVal id As Guid) As ActionResult
+            Dim data As Byte()
+            Dim name As String
+            Using context As New PkmDBContext
+                Dim query = (From p In context.Pokemon
+                             Where p.ID = id
+                             Select New With {
+                                 .Data = p.RawData
+                             }).FirstOrDefault
+                If query Is Nothing Then
+                    Return HttpNotFound()
+                Else
+                    Dim pkm As New PKHeX.PK6(query.Data)
+                    data = query.Data
+                    name = pkm.Nickname
+                End If
+            End Using
+
+            'Todo: determine mime type and extension based on format
+            Return File(data, "pkhex/pk6", name & ".pk6")
         End Function
 
         ' GET: Pokemon/Create

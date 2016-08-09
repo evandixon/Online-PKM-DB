@@ -5,6 +5,8 @@ End Code
 
 <h2>Index</h2>
 
+<p>This page is still under construction, so only the first 50 Pokémon are visible.</p>
+
 <p>
     @Html.ActionLink("Upload", "Create")
 </p>

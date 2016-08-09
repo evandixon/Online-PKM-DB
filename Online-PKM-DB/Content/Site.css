@@ -15,3 +15,59 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Pokemon Details */
+.pkm-image-panel {
+    float: right;
+    background-color: lightgray;
+    padding: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: black;
+}
+
+.pkm-image-inner {
+    background-color: white;
+    padding: 15px;
+}
+
+.pkm-image {
+    width: 300px;
+}
+
+.stat-boosted {
+    color: red;
+    font-weight: bold;
+}
+
+.stat-lowered {
+    color: blue;
+    font-weight: bold;
+}
+
+.stat-normal {
+    color: black;
+    font-weight: bold;
+}
+
+.trainer-male {
+    color:blue;
+}
+
+.trainer-female {
+    color: pink;
+}
+
+.stat-table {
+    border-collapse: collapse;
+}
+
+.stat-table, .stat-table th, .stat-table td {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+thead {
+    font-weight: bold;
+}
