@@ -58,7 +58,7 @@ Public Class AccountController
 
         ' This doesn't count login failures towards account lockout
         ' To enable password failures to trigger account lockout, change to shouldLockout := True
-        Dim result = Await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout := False)
+        Dim result = Await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout:=False)
         Select Case result
             Case SignInStatus.Success
                 Return RedirectToLocal(returnUrl)
@@ -131,7 +131,7 @@ Public Class AccountController
     Public Async Function Register(model As RegisterViewModel) As Task(Of ActionResult)
         If ModelState.IsValid Then
             Dim user = New ApplicationUser() With {
-                .UserName = model.Email,
+                .UserName = model.Username,
                 .Email = model.Email
             }
             Dim result = Await UserManager.CreateAsync(user, model.Password)
