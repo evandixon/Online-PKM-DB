@@ -71,6 +71,15 @@ Namespace My
                 Return CType(Me("PokemonListCountPerPage"),Integer)
             End Get
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("http://images.skyeditor.org/icons/")>  _
+        Public ReadOnly Property PkmIconsBaseUrl() As String
+            Get
+                Return CType(Me("PkmIconsBaseUrl"),String)
+            End Get
+        End Property
     End Class
 End Namespace
 

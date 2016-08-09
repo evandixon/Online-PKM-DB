@@ -4,12 +4,7 @@
 
 <table class="table">
     <tr>
-        <th>
-            Species ID
-        </th>
-        <th>
-            Species Name
-        </th>
+        <th></th>
         <th>
             Nickname
         </th>
@@ -31,16 +26,15 @@
         <th>
             Move 4
         </th>
+        <th>Uploaded By</th>
+        <th>Uploaded On</th>
         <th></th>
     </tr>
 
     @For Each item In Model.Results
         @<tr>
             <td>
-                @Html.DisplayFor(Function(modelItem) item.SpeciesID)
-            </td>
-            <td>
-                @Html.DisplayFor(Function(modelItem) item.SpeciesName)
+                <img src="@item.IconUrl" alt="Icon" />
             </td>
             <td>
                 @Html.DisplayFor(Function(modelItem) item.Nickname)
@@ -60,9 +54,15 @@
             <td>
                 @Html.DisplayFor(Function(modelItem) item.Move3)
             </td>
-            <td>
-                @Html.DisplayFor(Function(modelItem) item.Move4)
-            </td>
+             <td>
+                 @Html.DisplayFor(Function(modelItem) item.Move4)
+             </td>
+             <td>
+                 @Html.ActionLink(item.UploaderUsername, "SearchByUser", New With {.username = item.UploaderUsername})
+             </td>
+             <td>
+                 @Html.DisplayFor(Function(modelItem) item.UploadedDate)
+             </td>
             <td>
                 @*@Html.ActionLink("Edit", "Edit", New With {.id = item.PrimaryKey}) |*@
                 @Html.ActionLink("Details", "Details", New With {.id = item.PokemonID}) @*|

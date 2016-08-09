@@ -65,6 +65,22 @@ End Code
             @Html.DisplayFor(Function(model) model.Move4)
         </dd>
 
+        @* Uploader *@
+        <dt>
+            Date Uploaded
+        </dt>
+        <dd>
+            @Html.DisplayFor(Function(model) model.UploadedDate)
+        </dd>
+
+        @* Upload Date *@
+        <dt>
+            Uploaded By
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.UploaderUsername, "SearchByUser", New With {.username = Model.UploaderUsername})
+        </dd>
+
     </dl>
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()

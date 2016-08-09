@@ -4,18 +4,30 @@ Imports Online_PKM_DB.Models.Pokemon
 
 Namespace ViewModels
     Public Class GeneralPKMMetaDataViewModel
-        Public Sub New(metadata As PokemonGeneralMetadata, pokemonID As Guid)
+        Public Sub New(metadata As PokemonGeneralMetadata, pokemonID As Guid, uploadedDate As Date, uploaderUserID As String, uploaderUsername As String)
             Model = metadata
             Me.PokemonID = pokemonID
+            Me.UploadedDate = uploadedDate
+            Me.UploaderUserID = uploaderUserID
+            Me.UploaderUsername = uploaderUsername
         End Sub
 
         Private Property Model As PokemonGeneralMetadata
 
         Public ReadOnly Property PokemonID As Guid
+        Public ReadOnly Property UploadedDate As Date
+        Public ReadOnly Property UploaderUserID As String
+        Public Property UploaderUsername As String
 
         Public ReadOnly Property SpeciesID As Integer
             Get
                 Return Model.Species
+            End Get
+        End Property
+
+        Public ReadOnly Property IconUrl As String
+            Get
+                Return My.Settings.PkmIconsBaseUrl & SpeciesID.ToString & ".png"
             End Get
         End Property
 

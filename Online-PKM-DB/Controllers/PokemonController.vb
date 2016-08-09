@@ -16,17 +16,25 @@ Namespace Controllers
         Function Latest(page As Integer) As ActionResult
             Dim pageSize = My.Settings.PokemonListCountPerPage
 
+            'Get the PKM info
             Dim results As PKMSearchResults
             Using context As New PkmDBContext
                 Dim query = (From f In context.PokemonFormats
                              From p In f.Pokemon
                              From m In p.GeneralMetadata
                              Order By p.UploadDate Descending
-                             Select New With {.Metadata = m, .PokemonID = p.ID})
-                Dim entries = query.Skip(page * pageSize).Take(pageSize).AsEnumerable.Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID)).ToList
+                             Select New With {.Metadata = m, .PokemonID = p.ID, .UploadDate = p.UploadDate, .UploaderUserID = p.UploaderUserID})
+                Dim entries = query.Skip(page * pageSize).
+                                    Take(pageSize).
+                                    AsEnumerable.
+                                    Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID, x.UploadDate, x.UploaderUserID, Nothing)).ToList
                 Dim count = query.Count
                 results = New PKMSearchResults(entries, count, pageSize)
             End Using
+
+            'Get the usernames
+            PkmDBHelper.UpdateUsernames(results)
+
             Return View("Index", results)
         End Function
 
@@ -58,12 +66,18 @@ Namespace Controllers
                                  From m In p.GeneralMetadata
                                  Where p.UploaderUserID = userID
                                  Order By p.UploadDate Descending
-                                 Select New With {.Metadata = m, .PokemonID = p.ID})
-                    Dim entries = query.Skip(page * pageSize).Take(pageSize).AsEnumerable.Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID)).ToList
+                                 Select New With {.Metadata = m, .PokemonID = p.ID, .UploadDate = p.UploadDate, .UploaderUserID = p.UploaderUserID})
+                    Dim entries = query.Skip(page * pageSize).
+                                    Take(pageSize).
+                                    AsEnumerable.
+                                    Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID, x.UploadDate, x.UploaderUserID, Nothing)).ToList
                     Dim count = query.Count
                     results = New PKMUserSearchResults(entries, count, pageSize, username)
                 End Using
             End If
+
+            'Get the usernames
+            PkmDBHelper.UpdateUsernames(results)
 
             Return View(results)
         End Function
@@ -244,14 +258,19 @@ Namespace Controllers
                         Dim model = (From p In context.Pokemon
                                      From m In p.GeneralMetadata
                                      Where p.ID = id
-                                     Select New With {.Metadata = m, .PokemonID = p.ID, .uploaderID = p.UploaderUserID}).FirstOrDefault
+                                     Select New With {.Metadata = m, .PokemonID = p.ID, .uploadDate = p.UploadDate, .uploaderID = p.UploaderUserID}).FirstOrDefault
                         If model Is Nothing Then
                             Return HttpNotFound()
                         Else
                             If Not (User.Identity.GetUserId = model.uploaderID OrElse User.IsInRole("PKMDB-Moderator")) Then
                                 Throw New Http.HttpResponseException(Net.HttpStatusCode.Unauthorized)
                             Else
-                                metadata = New GeneralPKMMetaDataViewModel(model.Metadata, model.PokemonID)
+                                Dim username As String
+                                Using usersContext As New ApplicationDbContext
+                                    username = usersContext.Users.Where(Function(x) x.Id = model.uploaderID).Select(Function(x) x.UserName).FirstOrDefault
+                                End Using
+
+                                metadata = New GeneralPKMMetaDataViewModel(model.Metadata, model.PokemonID, model.uploadDate, model.uploaderID, username)
                                 Return View(metadata)
                             End If
                         End If
