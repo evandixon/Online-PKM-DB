@@ -28,18 +28,34 @@ Namespace Controllers
                 Dim query = (From p In context.Pokemon
                              Let f = p.Format
                              Where p.ID = id
-                             Select New With {.Data = p.RawData, .Format = f.StandardCode}
+                             Select New With {
+                                 .Data = p.RawData,
+                                 .Format = f.StandardCode,
+                                 .UploadDate = p.UploadDate,
+                                 .UploaderID = p.UploaderUserID
+                                 }
                             ).FirstOrDefault
                 If query Is Nothing Then
                     Return HttpNotFound()
                 End If
 
+                Dim uploaderUsername As String
+                Dim uploaderUserID As String = query.UploaderID
+                Using usersContext As New ApplicationDbContext
+                    uploaderUsername = (From u In usersContext.Users Where u.Id = query.UploaderID Select u.UserName).FirstOrDefault
+                End Using
+
+                If String.IsNullOrEmpty(uploaderUsername) Then
+                    uploaderUsername = "(Anonymous)"
+                    uploaderUserID = Guid.Empty.ToString
+                End If
+
                 Select Case query.Format
                     Case "PK6"
-                        model = New PK6ViewModel(New PKHeX.PK6(query.Data), id)
+                        model = New PK6ViewModel(New PKHeX.PK6(query.Data), id, query.UploadDate, uploaderUserID, uploaderUsername)
                         Return View("~/Views/Pokemon/PK6.vbhtml", model)
                     Case "PK5", "PK4", "PK3"
-                        model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id)
+                        model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id, query.UploadDate, uploaderUserID, uploaderUsername)
                         Return View("~/Views/Pokemon/GeneralPKM.vbhtml", model)
                     Case Else
                         Return View("~/Views/Pokemon/UnsupportedPKMFormat.vbhtml")

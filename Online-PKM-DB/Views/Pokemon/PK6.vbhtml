@@ -152,6 +152,22 @@ End Code
                 @*End If*@
             </dd>
 
+            @* Uploader *@
+            <dt>
+                Date Uploaded
+            </dt>
+            <dd>
+                @Html.DisplayFor(Function(model) model.UploadDate)
+            </dd>
+
+            @* Upload Date *@
+            <dt>
+                Uploaded By
+            </dt>
+            <dd>
+                @Html.DisplayFor(Function(model) model.UploaderUsername)
+            </dd>
+
         </dl>
     </div>
     <div style = "clear:both;" />

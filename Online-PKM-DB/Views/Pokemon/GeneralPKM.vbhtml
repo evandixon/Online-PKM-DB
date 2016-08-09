@@ -125,6 +125,22 @@ End Code
                 @Html.DisplayFor(Function(model) model.IsCured)
             </dd>
 
+            @* Uploader *@
+            <dt>
+                Date Uploaded
+            </dt>
+            <dd>
+                @Html.DisplayFor(Function(model) model.UploadDate)
+            </dd>
+
+            @* Upload Date *@
+            <dt>
+                Uploaded By
+            </dt>
+            <dd>
+                @Html.DisplayFor(Function(model) model.UploaderUsername)
+            </dd>
+
             @*@* Country
                 <dt>
                     @Html.DisplayNameFor(Function(model) model.Country)
