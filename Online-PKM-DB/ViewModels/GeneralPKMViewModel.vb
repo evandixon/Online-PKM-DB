@@ -3,22 +3,30 @@ Imports Online_PKM_DB.Helpers
 
 Namespace ViewModels
     Public Class GeneralPKMViewModel
-        Public Sub New(pkm As PKHeX.PKM, pokemonID As Guid, uploadDate As DateTime, uploaderID As String, uploaderUsername As String)
+        Public Sub New(pkm As PKHeX.PKM, pokemonID As Guid, uploadDate As DateTime, uploaderID As String, uploaderUsername As String, currentUserID As String)
             Me.Model = pkm
             Me.PokemonID = pokemonID
             Me.Legality = New PKHeX.LegalityAnalysis(pkm)
             Me.UploadDate = uploadDate
             Me.UploaderID = uploaderID
             Me.UploaderUsername = uploaderUsername
+            Me.CurrentUserID = currentUserID
         End Sub
 
         Protected Property Model As PKHeX.PKM
         Protected Property Legality As PKHeX.LegalityAnalysis
-        Public Property PokemonID As Guid
 
+        Public Property PokemonID As Guid
         Public Property UploadDate As DateTime
         Public Property UploaderID As String
         Public Property UploaderUsername As String
+        Protected Property CurrentUserID As String
+
+        Public ReadOnly Property CanDelete() As Boolean
+            Get
+                Return UploaderID = CurrentUserID OrElse My.User.IsInRole("PKMDB-Moderator")
+            End Get
+        End Property
 
 #Region "Main"
         Public ReadOnly Property SpeciesID As Integer

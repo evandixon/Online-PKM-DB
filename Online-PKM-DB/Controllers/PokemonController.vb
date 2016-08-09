@@ -52,10 +52,10 @@ Namespace Controllers
 
                 Select Case query.Format
                     Case "PK6"
-                        model = New PK6ViewModel(New PKHeX.PK6(query.Data), id, query.UploadDate, uploaderUserID, uploaderUsername)
+                        model = New PK6ViewModel(New PKHeX.PK6(query.Data), id, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
                         Return View("~/Views/Pokemon/PK6.vbhtml", model)
                     Case "PK5", "PK4", "PK3"
-                        model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id, query.UploadDate, uploaderUserID, uploaderUsername)
+                        model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
                         Return View("~/Views/Pokemon/GeneralPKM.vbhtml", model)
                     Case Else
                         Return View("~/Views/Pokemon/UnsupportedPKMFormat.vbhtml")
@@ -188,21 +188,43 @@ Namespace Controllers
         '    End Try
         'End Function
 
-        '' GET: Pokemon/Delete/5
-        'Function Delete(ByVal id As Integer) As ActionResult
-        '    Return View()
-        'End Function
-
-        '' POST: Pokemon/Delete/5
-        '<HttpPost()>
-        'Function Delete(ByVal id As Integer, ByVal collection As FormCollection) As ActionResult
-        '    Try
-        '        ' TODO: Add delete logic here
-
-        '        Return RedirectToAction("Index")
-        '    Catch
-        '        Return View()
-        '    End Try
-        'End Function
+        ' GET/POST: Pokemon/Delete/5
+        Function Delete(ByVal id As Guid) As ActionResult
+            Select Case HttpContext.Request.HttpMethod
+                Case "GET"
+                    Dim metadata As GeneralPKMMetaDataViewModel
+                    Using context As New PkmDBContext
+                        Dim model = (From p In context.Pokemon
+                                     From m In p.GeneralMetadata
+                                     Where p.ID = id
+                                     Select New With {.Metadata = m, .PokemonID = p.ID, .uploaderID = p.UploaderUserID}).FirstOrDefault
+                        If model Is Nothing Then
+                            Return HttpNotFound()
+                        Else
+                            If Not (User.Identity.GetUserId = model.uploaderID OrElse User.IsInRole("PKMDB-Moderator")) Then
+                                Throw New Http.HttpResponseException(Net.HttpStatusCode.Unauthorized)
+                            Else
+                                metadata = New GeneralPKMMetaDataViewModel(model.Metadata, model.PokemonID)
+                                Return View(metadata)
+                            End If
+                        End If
+                    End Using
+                Case "POST"
+                    Using context As New PkmDBContext
+                        Dim uploaderID As String = context.Pokemon.Where(Function(x) x.ID = id).Select(Function(x) x.UploaderUserID).FirstOrDefault
+                        If Not (User.Identity.GetUserId = uploaderID OrElse User.IsInRole("PKMDB-Moderator")) Then
+                            Throw New Http.HttpResponseException(Net.HttpStatusCode.Unauthorized)
+                        Else
+                            context.Pokemon.RemoveRange(context.Pokemon.Where(Function(x) x.ID = id))
+                            context.SaveChanges()
+                        End If
+                        context.Pokemon.RemoveRange(context.Pokemon.Where(Function(x) x.ID = id))
+                        context.SaveChanges()
+                    End Using
+                    Return RedirectToAction("Index")
+                Case Else
+                    Return HttpNotFound()
+            End Select
+        End Function
     End Class
 End Namespace

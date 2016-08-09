@@ -1,4 +1,5 @@
-﻿Imports Online_PKM_DB.Helpers
+﻿Imports System.ComponentModel.DataAnnotations
+Imports Online_PKM_DB.Helpers
 Imports Online_PKM_DB.Models.Pokemon
 
 Namespace ViewModels
@@ -18,7 +19,7 @@ Namespace ViewModels
             End Get
         End Property
 
-        Public ReadOnly Property SpeciesName As String
+        <Display(Name:="Species")> Public ReadOnly Property SpeciesName As String
             Get
                 Return PKHeXResources.GetGen6SpeciesName(Model.Species)
             End Get
@@ -42,25 +43,25 @@ Namespace ViewModels
             End Get
         End Property
 
-        Public ReadOnly Property Move1 As String
+        <Display(Name:="Move 1")> Public ReadOnly Property Move1 As String
             Get
                 Return PKHeXResources.GetGen6MoveName(Model.Move1)
             End Get
         End Property
 
-        Public ReadOnly Property Move2 As String
+        <Display(Name:="Move 2")> Public ReadOnly Property Move2 As String
             Get
                 Return PKHeXResources.GetGen6MoveName(Model.Move2)
             End Get
         End Property
 
-        Public ReadOnly Property Move3 As String
+        <Display(Name:="Move 3")> Public ReadOnly Property Move3 As String
             Get
                 Return PKHeXResources.GetGen6MoveName(Model.Move3)
             End Get
         End Property
 
-        Public ReadOnly Property Move4 As String
+        <Display(Name:="Move 4")> Public ReadOnly Property Move4 As String
             Get
                 Return PKHeXResources.GetGen6MoveName(Model.Move4)
             End Get
