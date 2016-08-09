@@ -52,29 +52,28 @@ Namespace Controllers
 
             'Get user ID for searching
             Dim userID As String
-            Using context As New ApplicationDbContext
-                userID = context.Users.Where(Function(x) x.UserName = username).Select(Function(x) x.Id).FirstOrDefault
-            End Using
-
-            If String.IsNullOrEmpty(userID) Then
-                'User not found, so there will be no results
-                results = New PKMUserSearchResults(New List(Of GeneralPKMMetaDataViewModel), 0, pageSize, username)
+            If username = "(Anonymous)" Then
+                userID = Nothing
             Else
-                Using context As New PkmDBContext
-                    Dim query = (From f In context.PokemonFormats
-                                 From p In f.Pokemon
-                                 From m In p.GeneralMetadata
-                                 Where p.UploaderUserID = userID
-                                 Order By p.UploadDate Descending
-                                 Select New With {.Metadata = m, .PokemonID = p.ID, .UploadDate = p.UploadDate, .UploaderUserID = p.UploaderUserID})
-                    Dim entries = query.Skip(page * pageSize).
+                Using context As New ApplicationDbContext
+                    userID = context.Users.Where(Function(x) x.UserName = username).Select(Function(x) x.Id).FirstOrDefault
+                End Using
+            End If
+
+            Using context As New PkmDBContext
+                Dim query = (From f In context.PokemonFormats
+                             From p In f.Pokemon
+                             From m In p.GeneralMetadata
+                             Where p.UploaderUserID = userID
+                             Order By p.UploadDate Descending
+                             Select New With {.Metadata = m, .PokemonID = p.ID, .UploadDate = p.UploadDate, .UploaderUserID = p.UploaderUserID})
+                Dim entries = query.Skip(page * pageSize).
                                     Take(pageSize).
                                     AsEnumerable.
                                     Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID, x.UploadDate, x.UploaderUserID, Nothing)).ToList
-                    Dim count = query.Count
-                    results = New PKMUserSearchResults(entries, count, pageSize, username)
-                End Using
-            End If
+                Dim count = query.Count
+                results = New PKMUserSearchResults(entries, count, pageSize, username)
+            End Using
 
             'Get the usernames
             PkmDBHelper.UpdateUsernames(results)
@@ -269,6 +268,9 @@ Namespace Controllers
                                 Using usersContext As New ApplicationDbContext
                                     username = usersContext.Users.Where(Function(x) x.Id = model.uploaderID).Select(Function(x) x.UserName).FirstOrDefault
                                 End Using
+                                If String.IsNullOrEmpty(username) Then
+                                    username = "(Anonymous)"
+                                End If
 
                                 metadata = New GeneralPKMMetaDataViewModel(model.Metadata, model.PokemonID, model.uploadDate, model.uploaderID, username)
                                 Return View(metadata)
