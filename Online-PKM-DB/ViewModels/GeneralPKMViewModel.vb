@@ -9,8 +9,8 @@ Namespace ViewModels
             Me.Legality = New PKHeX.LegalityAnalysis(pkm)
         End Sub
 
-        Private Property Model As PKHeX.PKM
-        Private Property Legality As PKHeX.LegalityAnalysis
+        Protected Property Model As PKHeX.PKM
+        Protected Property Legality As PKHeX.LegalityAnalysis
         Public Property PokemonID As Guid
 
 #Region "Main"
