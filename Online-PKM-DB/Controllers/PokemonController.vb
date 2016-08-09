@@ -99,14 +99,12 @@ Namespace Controllers
         End Function
 
         ' GET: Pokemon/Create
-        <Authorize>
         Function Create() As ActionResult
             Return View()
         End Function
 
         ' POST: Pokemon/Create
         <HttpPost()>
-        <Authorize>
         Function Create(ByVal file As HttpPostedFileBase) As ActionResult
             'Try
             'Ensure the size is OK
@@ -137,13 +135,17 @@ Namespace Controllers
             'Add the data to the database
             Dim newPKMID As Guid = Guid.NewGuid
             Using context As New PkmDBContext
+                Dim userID As String = Nothing
+                If My.User.IsAuthenticated Then
+                    userID = User.Identity.GetUserId
+                End If
                 Dim formatID = PkmDBHelper.GetFormatID(formatCode, context)
                 Dim pkmModel As New Pokemon With
                         {.ID = newPKMID,
                         .FormatID = formatID,
                         .RawData = data,
                         .UploadDate = Date.UtcNow,
-                        .UploaderUserID = User.Identity.GetUserId}
+                        .UploaderUserID = userID}
                 context.Pokemon.Add(pkmModel)
 
                 Dim meta As New PokemonGeneralMetadata With {
