@@ -11,6 +11,16 @@ Namespace Helpers
             End If
             Return match.ID
         End Function
+
+        Public Shared Function GetFormatID(formatCode As String, context As PkmDBContext) As Guid
+            Dim match = context.PokemonFormats.FirstOrDefault(Function(x) x.StandardCode = formatCode)
+            If match Is Nothing Then
+                match = New PokemonFormat With {.ID = Guid.NewGuid, .StandardCode = formatCode, .FriendlyName = formatCode}
+                context.PokemonFormats.Add(match)
+                context.SaveChanges()
+            End If
+            Return match.ID
+        End Function
     End Class
 End Namespace
 

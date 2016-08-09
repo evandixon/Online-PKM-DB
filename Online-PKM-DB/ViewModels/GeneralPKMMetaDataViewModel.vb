@@ -2,7 +2,7 @@
 Imports Online_PKM_DB.Models.Pokemon
 
 Namespace ViewModels
-    Public Class PK6MetaDataViewModel
+    Public Class GeneralPKMMetaDataViewModel
         Public Sub New(metadata As PokemonGeneralMetadata, pokemonID As Guid)
             Model = metadata
             Me.PokemonID = pokemonID

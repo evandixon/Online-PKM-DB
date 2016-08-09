@@ -305,7 +305,8 @@
     <Compile Include="Providers\ApplicationOAuthProvider.vb" />
     <Compile Include="Results\ChallengeResult.vb" />
     <Compile Include="Startup.vb" />
-    <Compile Include="ViewModels\PK6MetaDataViewModel.vb" />
+    <Compile Include="ViewModels\GeneralPKMMetaDataViewModel.vb" />
+    <Compile Include="ViewModels\GeneralPKMViewModel.vb" />
     <Compile Include="ViewModels\PK6ViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -362,7 +363,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Pokemon\Index.vbhtml" />
-    <Content Include="Views\Pokemon\Details.vbhtml" />
+    <Content Include="Views\Pokemon\PK6.vbhtml" />
     <Content Include="Views\Pokemon\Create.vbhtml" />
     <Content Include="Views\Account\ConfirmEmail.vbhtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.vbhtml" />
@@ -384,6 +385,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.vbhtml" />
     <Content Include="Views\Shared\Lockout.vbhtml" />
     <Content Include="Views\Shared\_LoginPartial.vbhtml" />
+    <Content Include="Views\Pokemon\GeneralPKM.vbhtml" />
+    <Content Include="Views\Pokemon\UnsuportedPKMFormat.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

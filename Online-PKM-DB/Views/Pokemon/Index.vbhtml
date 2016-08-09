@@ -1,4 +1,4 @@
-﻿@ModelType IEnumerable(Of Online_PKM_DB.ViewModels.PK6MetaDataViewModel)
+﻿@ModelType IEnumerable(Of Online_PKM_DB.ViewModels.GeneralPKMMetaDataViewModel)
 @Code
 ViewData("Title") = "Index"
 End Code

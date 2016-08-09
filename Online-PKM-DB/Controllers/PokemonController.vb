@@ -10,31 +10,41 @@ Namespace Controllers
 
         ' GET: Pokemon
         Function Index() As ActionResult
-            Dim entries As List(Of PK6MetaDataViewModel)
+            Dim entries As List(Of GeneralPKMMetaDataViewModel)
             Using context As New PkmDBContext
                 entries = (From f In context.PokemonFormats
                            From p In f.Pokemon
                            From m In p.GeneralMetadata
-                           Where f.StandardCode = "PK6"
                            Order By p.UploadDate Descending
-                           Select New With {.Metadata = m, .PokemonID = p.ID}).Take(50).AsEnumerable.Select(Function(x) New PK6MetaDataViewModel(x.Metadata, x.PokemonID)).ToList
+                           Select New With {.Metadata = m, .PokemonID = p.ID}).Take(50).AsEnumerable.Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID)).ToList
             End Using
             Return View(entries)
         End Function
 
         ' GET: Pokemon/Details/5
         Function Details(ByVal id As Guid) As ActionResult
-            'Todo: use a different model or a different view for different PKM types
-            Dim pkm As PK6ViewModel
+            Dim model As Object
             Using context As New PkmDBContext
-                Dim data = (From p In context.Pokemon Where p.ID = id Select p.RawData).FirstOrDefault
-                If data Is Nothing Then
+                Dim query = (From p In context.Pokemon
+                             Let f = p.Format
+                             Where p.ID = id
+                             Select New With {.Data = p.RawData, .Format = f.StandardCode}
+                            ).FirstOrDefault
+                If query Is Nothing Then
                     Return HttpNotFound()
                 End If
 
-                pkm = New PK6ViewModel(New PKHeX.PK6(data), id)
+                Select Case query.Format
+                    Case "PK6"
+                        model = New PK6ViewModel(New PKHeX.PK6(query.Data), id)
+                        Return View("~/Views/Pokemon/PK6.vbhtml", model)
+                    Case "PK5", "PK4", "PK3"
+                        model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id)
+                        Return View("~/Views/Pokemon/GeneralPKM.vbhtml", model)
+                    Case Else
+                        Return View("~/Views/Pokemon/UnsupportedPKMFormat.vbhtml")
+                End Select
             End Using
-            Return View(pkm)
         End Function
 
         Function Download(ByVal id As Guid) As ActionResult
@@ -42,21 +52,34 @@ Namespace Controllers
             Dim name As String
             Using context As New PkmDBContext
                 Dim query = (From p In context.Pokemon
+                             Let f = p.Format
                              Where p.ID = id
                              Select New With {
-                                 .Data = p.RawData
+                                 .Data = p.RawData,
+                                 .Format = f.StandardCode
                              }).FirstOrDefault
                 If query Is Nothing Then
                     Return HttpNotFound()
                 Else
-                    Dim pkm As New PKHeX.PK6(query.Data)
+                    Dim pkm = PKHeX.PKMConverter.getPKMfromBytes(query.Data)
                     data = query.Data
                     name = pkm.Nickname
+
+                    Select Case query.Format
+                        Case "PK6"
+                            name &= ".pk6"
+                        Case "PK5"
+                            name &= ".pk5"
+                        Case "PK4"
+                            name &= ".pk4"
+                        Case "PK3"
+                            name &= ".pk3"
+                    End Select
                 End If
             End Using
 
             'Todo: determine mime type and extension based on format
-            Return File(data, "pkhex/pk6", name & ".pk6")
+            Return File(data, "pkhex/pkm", name)
         End Function
 
         ' GET: Pokemon/Create
@@ -79,37 +102,46 @@ Namespace Controllers
             Dim data(file.ContentLength - 1) As Byte
             file.InputStream.Read(data, 0, file.ContentLength)
 
-            'Todo: Detect type of file
-            'For now, we'll just make sure it's a valid PK6 file
-            If Not PKHeX.PKMConverter.getPKMDataFormat(data) = 6 Then
-                Throw New Http.HttpResponseException(Net.HttpStatusCode.BadRequest)
-            End If
+            'Detect the type
+            Dim formatCode As String
+            Dim pkm = PKHeX.PKMConverter.getPKMfromBytes(data)
+            Select Case PKHeX.PKMConverter.getPKMDataFormat(data)
+                Case 6
+                    formatCode = "PK6"
+                Case 5
+                    formatCode = "PK5"
+                Case 4
+                    formatCode = "PK4"
+                Case 3
+                    formatCode = "PK3"
+                Case Else
+                    Throw New Http.HttpResponseException(Net.HttpStatusCode.BadRequest)
+            End Select
 
             'Add the data to the database
-            Dim pk6 As New PKHeX.PK6(data)
             Dim newPKMID As Guid = Guid.NewGuid
             Using context As New PkmDBContext
-                Dim formatID = PkmDBHelper.GetPK6FormatID(context)
-                Dim pkm As New Pokemon With
+                Dim formatID = PkmDBHelper.GetFormatID(formatCode, context)
+                Dim pkmModel As New Pokemon With
                         {.ID = newPKMID,
                         .FormatID = formatID,
                         .RawData = data,
                         .UploadDate = Date.UtcNow,
                         .UploaderUserID = User.Identity.GetUserId}
-                context.Pokemon.Add(pkm)
+                context.Pokemon.Add(pkmModel)
 
                 Dim meta As New PokemonGeneralMetadata With {
                         .ID = Guid.NewGuid,
-                        .PokemonID = pkm.ID,
-                        .Ability = pk6.Ability,
-                        .Level = pk6.CurrentLevel,
-                        .Move1 = pk6.Move1,
-                        .Move2 = pk6.Move2,
-                        .Move3 = pk6.Move3,
-                        .Move4 = pk6.Move4,
-                        .Nickname = pk6.Nickname,
-                        .OTName = pk6.OT_Name,
-                        .Species = pk6.Species}
+                        .PokemonID = pkmModel.ID,
+                        .Ability = pkm.Ability,
+                        .Level = pkm.CurrentLevel,
+                        .Move1 = pkm.Move1,
+                        .Move2 = pkm.Move2,
+                        .Move3 = pkm.Move3,
+                        .Move4 = pkm.Move4,
+                        .Nickname = pkm.Nickname,
+                        .OTName = pkm.OT_Name,
+                        .Species = pkm.Species}
 
                 context.GeneralPokemonMetadata.Add(meta)
 
