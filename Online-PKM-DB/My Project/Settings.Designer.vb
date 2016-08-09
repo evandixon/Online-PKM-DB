@@ -62,6 +62,15 @@ Namespace My
                 Return CType(Me("SugimoriArtworkBaseUrl"),String)
             End Get
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("25")>  _
+        Public ReadOnly Property PokemonListCountPerPage() As Integer
+            Get
+                Return CType(Me("PokemonListCountPerPage"),Integer)
+            End Get
+        End Property
     End Class
 End Namespace
 

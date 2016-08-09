@@ -138,7 +138,7 @@ End Code
                 Uploaded By
             </dt>
             <dd>
-                @Html.DisplayFor(Function(model) model.UploaderUsername)
+                @Html.ActionLink(Model.UploaderUsername, "SearchByUser", New With {.username = Model.UploaderUsername})
             </dd>
 
             @*@* Country

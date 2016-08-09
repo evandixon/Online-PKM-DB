@@ -281,6 +281,7 @@
     </Compile>
     <Compile Include="Helpers\PKHeXResources.vb" />
     <Compile Include="Helpers\PkmDBHelper.vb" />
+    <Compile Include="Helpers\RequireQueryStringValuesAttribute.vb" />
     <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\API\AccountBindingModels.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
@@ -312,7 +313,10 @@
     <Compile Include="Startup.vb" />
     <Compile Include="ViewModels\GeneralPKMMetaDataViewModel.vb" />
     <Compile Include="ViewModels\GeneralPKMViewModel.vb" />
+    <Compile Include="ViewModels\PagerViewModel.vb" />
     <Compile Include="ViewModels\PK6ViewModel.vb" />
+    <Compile Include="ViewModels\PKMSearchResults.vb" />
+    <Compile Include="ViewModels\PKMUserSearchResults.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -393,6 +397,9 @@
     <Content Include="Views\Pokemon\GeneralPKM.vbhtml" />
     <Content Include="Views\Pokemon\UnsuportedPKMFormat.vbhtml" />
     <Content Include="Views\Pokemon\Delete.vbhtml" />
+    <Content Include="Views\Pokemon\SearchByUser.vbhtml" />
+    <Content Include="Views\Shared\_PokemonList.vbhtml" />
+    <Content Include="Views\Shared\_Pager.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

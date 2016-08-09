@@ -10,15 +10,62 @@ Namespace Controllers
 
         ' GET: Pokemon
         Function Index() As ActionResult
-            Dim entries As List(Of GeneralPKMMetaDataViewModel)
+            Return RedirectToAction("Latest", New With {.page = 0})
+        End Function
+
+        Function Latest(page As Integer) As ActionResult
+            Dim pageSize = My.Settings.PokemonListCountPerPage
+
+            Dim results As PKMSearchResults
             Using context As New PkmDBContext
-                entries = (From f In context.PokemonFormats
-                           From p In f.Pokemon
-                           From m In p.GeneralMetadata
-                           Order By p.UploadDate Descending
-                           Select New With {.Metadata = m, .PokemonID = p.ID}).Take(50).AsEnumerable.Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID)).ToList
+                Dim query = (From f In context.PokemonFormats
+                             From p In f.Pokemon
+                             From m In p.GeneralMetadata
+                             Order By p.UploadDate Descending
+                             Select New With {.Metadata = m, .PokemonID = p.ID})
+                Dim entries = query.Skip(page * pageSize).Take(pageSize).AsEnumerable.Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID)).ToList
+                Dim count = query.Count
+                results = New PKMSearchResults(entries, count, pageSize)
             End Using
-            Return View(entries)
+            Return View("Index", results)
+        End Function
+
+        ' GET: SearchByUser/evandixon
+        <RequireQueryStringValues({"username"})>
+        Function SearchByUser(username As String) As ActionResult
+            Return SearchByUser(username, 0)
+        End Function
+
+        <RequireQueryStringValues({"username", "page"})>
+        Function SearchByUser(username As String, page As Integer) As ActionResult
+            Dim pageSize = My.Settings.PokemonListCountPerPage
+
+            Dim results As PKMUserSearchResults
+
+            'Get user ID for searching
+            Dim userID As String
+            Using context As New ApplicationDbContext
+                userID = context.Users.Where(Function(x) x.UserName = username).Select(Function(x) x.Id).FirstOrDefault
+            End Using
+
+            If String.IsNullOrEmpty(userID) Then
+                'User not found, so there will be no results
+                results = New PKMUserSearchResults(New List(Of GeneralPKMMetaDataViewModel), 0, pageSize, username)
+            Else
+                Using context As New PkmDBContext
+                    Dim query = (From f In context.PokemonFormats
+                                 From p In f.Pokemon
+                                 From m In p.GeneralMetadata
+                                 Where p.UploaderUserID = userID
+                                 Order By p.UploadDate Descending
+                                 Select New With {.Metadata = m, .PokemonID = p.ID})
+                    Dim entries = query.Skip(page * pageSize).Take(pageSize).AsEnumerable.Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID)).ToList
+                    Dim count = query.Count
+                    results = New PKMUserSearchResults(entries, count, pageSize, username)
+                End Using
+            End If
+
+            Return View(results)
         End Function
 
         ' GET: Pokemon/Details/5
