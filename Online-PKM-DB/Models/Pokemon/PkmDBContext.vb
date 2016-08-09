@@ -11,6 +11,11 @@ Namespace Models.Pokemon
         Public Property PokemonFormats As DbSet(Of PokemonFormat)
         Public Property Pokemon As DbSet(Of Pokemon)
         Public Property GeneralPokemonMetadata As DbSet(Of PokemonGeneralMetadata)
+
+        Protected Overrides Sub OnModelCreating(modelBuilder As DbModelBuilder)
+            MyBase.OnModelCreating(modelBuilder)
+            Database.SetInitializer(New MigrateDatabaseToLatestVersion(Of PkmDBContext, Migrations.Configuration))
+        End Sub
     End Class
 End Namespace
 
