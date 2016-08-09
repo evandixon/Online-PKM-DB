@@ -30,7 +30,7 @@ Namespace Controllers
                              Where p.ID = id
                              Select New With {
                                  .Data = p.RawData,
-                                 .Format = f.StandardCode,
+                                 .Format = f,
                                  .UploadDate = p.UploadDate,
                                  .UploaderID = p.UploaderUserID
                                  }
@@ -50,12 +50,12 @@ Namespace Controllers
                     uploaderUserID = Guid.Empty.ToString
                 End If
 
-                Select Case query.Format
+                Select Case query.Format.StandardCode
                     Case "PK6"
-                        model = New PK6ViewModel(New PKHeX.PK6(query.Data), id, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
+                        model = New PK6ViewModel(New PKHeX.PK6(query.Data), id, query.Format.FriendlyName, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
                         Return View("~/Views/Pokemon/PK6.vbhtml", model)
                     Case "PK5", "PK4", "PK3"
-                        model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
+                        model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id, query.Format.FriendlyName, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
                         Return View("~/Views/Pokemon/GeneralPKM.vbhtml", model)
                     Case Else
                         Return View("~/Views/Pokemon/UnsupportedPKMFormat.vbhtml")

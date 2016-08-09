@@ -4,8 +4,8 @@ Imports Online_PKM_DB.Helpers
 Namespace ViewModels
     Public Class PK6ViewModel
         Inherits GeneralPKMViewModel
-        Public Sub New(pkm As PKHeX.PK6, pokemonID As Guid, uploadDate As DateTime, uploaderID As String, uploaderUsername As String, currentUserName As String)
-            MyBase.New(pkm, pokemonID, uploadDate, uploaderID, uploaderUsername, currentUserName)
+        Public Sub New(pkm As PKHeX.PK6, pokemonID As Guid, pokemonFormatFriendlyName As String, uploadDate As DateTime, uploaderID As String, uploaderUsername As String, currentUserName As String)
+            MyBase.New(pkm, pokemonID, pokemonFormatFriendlyName, uploadDate, uploaderID, uploaderUsername, currentUserName)
         End Sub
 
         Protected Shadows Property Model As PKHeX.PK6

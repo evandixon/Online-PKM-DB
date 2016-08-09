@@ -3,9 +3,10 @@ Imports Online_PKM_DB.Helpers
 
 Namespace ViewModels
     Public Class GeneralPKMViewModel
-        Public Sub New(pkm As PKHeX.PKM, pokemonID As Guid, uploadDate As DateTime, uploaderID As String, uploaderUsername As String, currentUserID As String)
+        Public Sub New(pkm As PKHeX.PKM, pokemonID As Guid, pokemonFormatFriendlyName As String, uploadDate As DateTime, uploaderID As String, uploaderUsername As String, currentUserID As String)
             Me.Model = pkm
             Me.PokemonID = pokemonID
+            Me.PokemonFormatFriendlyName = pokemonFormatFriendlyName
             Me.Legality = New PKHeX.LegalityAnalysis(pkm)
             Me.UploadDate = uploadDate
             Me.UploaderID = uploaderID
@@ -17,6 +18,7 @@ Namespace ViewModels
         Protected Property Legality As PKHeX.LegalityAnalysis
 
         Public Property PokemonID As Guid
+        Public Property PokemonFormatFriendlyName As String
         Public Property UploadDate As DateTime
         Public Property UploaderID As String
         Public Property UploaderUsername As String

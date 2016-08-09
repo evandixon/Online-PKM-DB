@@ -171,7 +171,7 @@ End Code
         </dl>
     </div>
     <div style = "clear:both;" />
-    @Html.ActionLink("Download PK6", "Download", New With {.id = Model.PokemonID})
+    @Html.ActionLink("Download " & Model.PokemonFormatFriendlyName, "Download", New With {.id = Model.PokemonID})
     @If Model.CanDelete() Then
         @<span> | @Html.ActionLink("Delete", "Delete", New With {.id = Model.PokemonID})</span>
 End If
