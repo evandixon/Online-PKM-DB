@@ -277,6 +277,7 @@
     </Compile>
     <Compile Include="Helpers\PKHeXResources.vb" />
     <Compile Include="Helpers\PkmDBHelper.vb" />
+    <Compile Include="Migrations\Configuration.vb" />
     <Compile Include="Models\API\AccountBindingModels.vb" />
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\IdentityModels.vb" />
