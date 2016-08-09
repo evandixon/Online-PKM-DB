@@ -169,7 +169,11 @@ Namespace ViewModels
 
         <Display(Name:="Met Date")> <DisplayFormat(DataFormatString:="{0:d}")> Public ReadOnly Property MetDate As Date
             Get
-                Return New Date(2000 + Model.Met_Year, Model.Met_Month, Model.Met_Day)
+                If Model.Met_Year = 0 OrElse Model.Met_Month = 0 OrElse Model.Met_Day = 0 Then
+                    Return Date.MinValue
+                Else
+                    Return New Date(2000 + Model.Met_Year, Model.Met_Month, Model.Met_Day)
+                End If
             End Get
         End Property
 
@@ -409,7 +413,11 @@ Namespace ViewModels
 
         Public ReadOnly Property Characteristic As String
             Get
-                Return PKHeXResources.GetGen6CharacteristicName(Model.Characteristic)
+                If Model.Characteristic < 0 Then
+                    Return "N/A"
+                Else
+                    Return PKHeXResources.GetGen6CharacteristicName(Model.Characteristic)
+                End If
             End Get
         End Property
 
