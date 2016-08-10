@@ -11,5 +11,8 @@
     <Setting Name="PkmIconsBaseUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://images.skyeditor.org/icons/</Value>
     </Setting>
+    <Setting Name="EnableAnonymousUploads" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
