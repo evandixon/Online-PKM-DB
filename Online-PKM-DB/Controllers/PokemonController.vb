@@ -16,12 +16,16 @@ Namespace Controllers
         Function Latest(page As Integer) As ActionResult
             Dim pageSize = My.Settings.PokemonListCountPerPage
 
+            Dim currentUserID As String = User.Identity.GetUserId
+            Dim isModerator As Boolean = User.IsInRole("PKMDB-Moderator")
+
             'Get the PKM info
             Dim results As PKMSearchResults
             Using context As New PkmDBContext
                 Dim query = (From f In context.PokemonFormats
                              From p In f.Pokemon
                              From m In p.GeneralMetadata
+                             Where Not p.IsUnlisted AndAlso (Not p.IsPrivate OrElse p.UploaderUserID = currentUserID OrElse isModerator)
                              Order By p.UploadDate Descending
                              Select New With {.Metadata = m, .PokemonID = p.ID, .UploadDate = p.UploadDate, .UploaderUserID = p.UploaderUserID})
                 Dim entries = query.Skip(page * pageSize).
@@ -60,11 +64,14 @@ Namespace Controllers
                 End Using
             End If
 
+            Dim currentUserID As String = User.Identity.GetUserId
+            Dim isModerator As Boolean = User.IsInRole("PKMDB-Moderator")
+
             Using context As New PkmDBContext
                 Dim query = (From f In context.PokemonFormats
                              From p In f.Pokemon
                              From m In p.GeneralMetadata
-                             Where p.UploaderUserID = userID
+                             Where p.UploaderUserID = userID AndAlso Not p.IsUnlisted AndAlso (Not p.IsPrivate OrElse p.UploaderUserID = currentUserID OrElse isModerator)
                              Order By p.UploadDate Descending
                              Select New With {.Metadata = m, .PokemonID = p.ID, .UploadDate = p.UploadDate, .UploaderUserID = p.UploaderUserID})
                 Dim entries = query.Skip(page * pageSize).
@@ -83,11 +90,14 @@ Namespace Controllers
 
         ' GET: Pokemon/Details/5
         Function Details(ByVal id As Guid) As ActionResult
+            Dim currentUserID As String = User.Identity.GetUserId
+            Dim isModerator As Boolean = User.IsInRole("PKMDB-Moderator")
+
             Dim model As Object
             Using context As New PkmDBContext
                 Dim query = (From p In context.Pokemon
                              Let f = p.Format
-                             Where p.ID = id
+                             Where p.ID = id AndAlso (Not p.IsPrivate OrElse p.UploaderUserID = currentUserID OrElse isModerator)
                              Select New With {
                                  .Data = p.RawData,
                                  .Format = f,
@@ -124,12 +134,15 @@ Namespace Controllers
         End Function
 
         Function Download(ByVal id As Guid) As ActionResult
+            Dim currentUserID As String = User.Identity.GetUserId
+            Dim isModerator As Boolean = User.IsInRole("PKMDB-Moderator")
+
             Dim data As Byte()
             Dim name As String
             Using context As New PkmDBContext
                 Dim query = (From p In context.Pokemon
                              Let f = p.Format
-                             Where p.ID = id
+                             Where p.ID = id AndAlso (Not p.IsPrivate OrElse p.UploaderUserID = currentUserID OrElse isModerator) AndAlso (Not p.DisableDownloading OrElse p.UploaderUserID = currentUserID OrElse isModerator)
                              Select New With {
                                  .Data = p.RawData,
                                  .Format = f.StandardCode
