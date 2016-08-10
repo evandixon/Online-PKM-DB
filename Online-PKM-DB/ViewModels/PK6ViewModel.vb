@@ -31,13 +31,9 @@ Namespace ViewModels
         '    End Get
         'End Property
 
-        <Display(Name:="Egg Met Date")> <DisplayFormat(DataFormatString:="{0:d}")> Public ReadOnly Property EggMetDate As Date
+        <Display(Name:="Egg Met Date")> <DisplayFormat(DataFormatString:="{0:d}")> Public ReadOnly Property EggMetDate As Date?
             Get
-                If Model.WasEgg Then
-                    Return New Date(2000 + Model.Egg_Year, Model.Egg_Month, Model.Egg_Day)
-                Else
-                    Return MetDate
-                End If
+                Return Model.EggMetDate
             End Get
         End Property
 #End Region
@@ -71,7 +67,7 @@ Namespace ViewModels
 
 #Region "OT/Misc"
 
-        Public ReadOnly Property LatestHandler As String
+        <Display(Name:="Latest Handler")> Public ReadOnly Property LatestHandler As String
             Get
                 Return Model.HT_Name
             End Get

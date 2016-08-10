@@ -18,7 +18,6 @@ textarea {
 
 /* Pokemon Details */
 .pkm-image-panel {
-    float: right;
     background-color: lightgray;
     padding: 10px;
     border-style: solid;

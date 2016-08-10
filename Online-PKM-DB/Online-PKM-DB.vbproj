@@ -82,7 +82,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PKHeX, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\packages\PKHeX.1.0.0-CI137\lib\net40\PKHeX.exe</HintPath>
+      <HintPath>..\packages\PKHeX.1.0.0-CI162\lib\net40\PKHeX.exe</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -372,7 +372,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Pokemon\Index.vbhtml" />
-    <Content Include="Views\Pokemon\PK6.vbhtml" />
     <Content Include="Views\Pokemon\Create.vbhtml" />
     <Content Include="Views\Account\ConfirmEmail.vbhtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.vbhtml" />
@@ -400,6 +399,13 @@
     <Content Include="Views\Pokemon\SearchByUser.vbhtml" />
     <Content Include="Views\Shared\_PokemonList.vbhtml" />
     <Content Include="Views\Shared\_Pager.vbhtml" />
+    <Content Include="Views\Shared\PokemonDetails\_PokemonStats.vbhtml" />
+    <Content Include="Views\Shared\PokemonDetails\_ContestStats.vbhtml" />
+    <Content Include="Views\Shared\PokemonDetails\_PokemonGeneral.vbhtml" />
+    <Content Include="Views\Shared\PokemonDetails\_PokemonLegality.vbhtml" />
+    <Content Include="Views\Shared\PokemonDetails\_OTMisc.vbhtml" />
+    <Content Include="Views\Shared\PokemonDetails\_PokemonMet.vbhtml" />
+    <Content Include="Views\Shared\PokemonDetails\_PokemonMoves.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

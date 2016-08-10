@@ -113,7 +113,7 @@ Namespace Controllers
                 Select Case query.Format.StandardCode
                     Case "PK6"
                         model = New PK6ViewModel(New PKHeX.PK6(query.Data), id, query.Format.FriendlyName, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
-                        Return View("~/Views/Pokemon/PK6.vbhtml", model)
+                        Return View("~/Views/Pokemon/GeneralPKM.vbhtml", model)
                     Case "PK5", "PK4", "PK3"
                         model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id, query.Format.FriendlyName, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
                         Return View("~/Views/Pokemon/GeneralPKM.vbhtml", model)

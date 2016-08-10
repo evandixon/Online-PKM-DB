@@ -167,13 +167,9 @@ Namespace ViewModels
             End Get
         End Property
 
-        <Display(Name:="Met Date")> <DisplayFormat(DataFormatString:="{0:d}")> Public ReadOnly Property MetDate As Date
+        <Display(Name:="Met Date")> <DisplayFormat(DataFormatString:="{0:d}")> Public ReadOnly Property MetDate As Date?
             Get
-                If Model.Met_Year = 0 OrElse Model.Met_Month = 0 OrElse Model.Met_Day = 0 Then
-                    Return Date.MinValue
-                Else
-                    Return New Date(2000 + Model.Met_Year, Model.Met_Month, Model.Met_Day)
-                End If
+                Return Model.MetDate
             End Get
         End Property
 
@@ -182,29 +178,6 @@ Namespace ViewModels
                 Return Model.FatefulEncounter
             End Get
         End Property
-
-        '' Not supported in general yet
-        '<Display(Name:="Was Egg")> Public ReadOnly Property MetAsEgg As Boolean
-        '    Get
-        '        Return Model.WasEgg
-        '    End Get
-        'End Property
-
-        'Public ReadOnly Property MetAsEggLocation As String
-        '    Get
-        '        Return 'Model.Egg_Location
-        '    End Get
-        'End Property
-
-        '<Display(Name:="Egg Met Date")> <DisplayFormat(DataFormatString:="{0:d}")> Public ReadOnly Property EggMetDate As Date
-        '    Get
-        '        If Model.WasEgg Then
-        '            Return New Date(2000 + Model.Egg_Year, Model.Egg_Month, Model.Egg_Day)
-        '        Else
-        '            Return MetDate
-        '        End If
-        '    End Get
-        'End Property
 #End Region
 
 #Region "Stats"
