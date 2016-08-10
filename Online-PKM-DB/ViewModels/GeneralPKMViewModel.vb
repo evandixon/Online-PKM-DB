@@ -503,13 +503,13 @@ Namespace ViewModels
 #End Region
 
 #Region "OT/Misc"
-        Public ReadOnly Property TID As Integer
+        <DisplayFormat(DataFormatString:="{0:D5}")> Public ReadOnly Property TID As Integer
             Get
                 Return Model.TID
             End Get
         End Property
 
-        Public ReadOnly Property SID As Integer
+        <DisplayFormat(DataFormatString:="{0:D5}")> Public ReadOnly Property SID As Integer
             Get
                 Return Model.SID
             End Get
