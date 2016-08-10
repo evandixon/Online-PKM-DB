@@ -9,7 +9,18 @@
         Public Shared ReadOnly Property ItemsList As New Lazy(Of String())(Function() PKHeX.Util.getStringList("items", "en"))
         Public Shared ReadOnly Property TypesList As New Lazy(Of String())(Function() PKHeX.Util.getStringList("types", "en"))
         Public Shared ReadOnly Property CharacteristicsList As New Lazy(Of String())(Function() PKHeX.Util.getStringList("character", "en"))
-        Public Shared ReadOnly Property LanguagesList As New Lazy(Of String())(Function() PKHeX.Util.getStringList("languages"))
+        Public Shared ReadOnly Property LanguagesList As New Lazy(Of String())(Function()
+                                                                                   'Todo: move functionality to PKHeX
+                                                                                   Dim raw = PKHeX.Util.getStringList("languages")
+                                                                                   Dim parts = raw.Select(Function(x) x.Split(","))
+                                                                                   Dim data(8) As String
+                                                                                   For Each item In parts
+                                                                                       If IsNumeric(item(0)) Then
+                                                                                           data(CInt(item(0))) = item(1)
+                                                                                       End If
+                                                                                   Next
+                                                                                   Return data
+                                                                               End Function)
         Public Shared ReadOnly Property CountriesList As New Lazy(Of String())(Function() PKHeX.Util.getStringList("countries"))
         Public Shared ReadOnly Property ConsoleRegionsList As New Lazy(Of String())(Function() PKHeX.Util.getStringList("regions3ds"))
 
