@@ -170,8 +170,13 @@
             </div>
         </div>
     </div>
-    @Html.ActionLink("Download " & Model.PokemonFormatFriendlyName, "Download", New With {.id = Model.PokemonID})
+    @If Model.CanDownload Then
+        @Html.ActionLink("Download " & Model.PokemonFormatFriendlyName, "Download", New With {.id = Model.PokemonID})
+    End If
+    @If Model.CanDownload AndAlso Model.CanDelete Then
+        @Html.Raw(" | ")
+    End If
     @If Model.CanDelete() Then
-        @<span> | @Html.ActionLink("Delete", "Delete", New With {.id = Model.PokemonID})</span>
+        @<span>@Html.ActionLink("Delete", "Delete", New With {.id = Model.PokemonID})</span>
     End If
 </div>

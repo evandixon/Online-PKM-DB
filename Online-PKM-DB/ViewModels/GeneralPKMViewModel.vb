@@ -3,7 +3,7 @@ Imports Online_PKM_DB.Helpers
 
 Namespace ViewModels
     Public Class GeneralPKMViewModel
-        Public Sub New(pkm As PKHeX.PKM, pokemonID As Guid, pokemonFormatFriendlyName As String, uploadDate As DateTime, uploaderID As String, uploaderUsername As String, currentUserID As String)
+        Public Sub New(pkm As PKHeX.PKM, pokemonID As Guid, pokemonFormatFriendlyName As String, uploadDate As DateTime, uploaderID As String, uploaderUsername As String, currentUserID As String, isUnlisted As Boolean, isPrivate As Boolean, disableDownloads As Boolean)
             Me.Model = pkm
             Me.PokemonID = pokemonID
             Me.PokemonFormatFriendlyName = pokemonFormatFriendlyName
@@ -12,6 +12,9 @@ Namespace ViewModels
             Me.UploaderID = uploaderID
             Me.UploaderUsername = uploaderUsername
             Me.CurrentUserID = currentUserID
+            Me.IsUnlisted = isUnlisted
+            Me.IsPrivate = isPrivate
+            Me.DisableDownloads = disableDownloads
         End Sub
 
         Protected Property Model As PKHeX.PKM
@@ -23,12 +26,45 @@ Namespace ViewModels
         Public Property UploaderID As String
         Public Property UploaderUsername As String
         Protected Property CurrentUserID As String
+        Public Property IsUnlisted As Boolean
+        Public Property IsPrivate As Boolean
+        Public Property DisableDownloads As Boolean
+
+        Public ReadOnly Property CanDownload As Boolean
+            Get
+                Return Not DisableDownloads OrElse UploaderID = CurrentUserID OrElse IsCurrentUserModerator
+            End Get
+        End Property
 
         Public ReadOnly Property CanDelete() As Boolean
             Get
-                Return UploaderID = CurrentUserID OrElse My.User.IsInRole("PKMDB-Moderator")
+                Return UploaderID = CurrentUserID OrElse IsCurrentUserModerator
             End Get
         End Property
+
+        Public ReadOnly Property ShowUnlistedNotice() As Boolean
+            Get
+                Return IsUnlisted AndAlso (UploaderID = CurrentUserID OrElse IsCurrentUserModerator)
+            End Get
+        End Property
+
+        Public ReadOnly Property ShowDownloadDisabledNotice() As Boolean
+            Get
+                Return DisableDownloads AndAlso CanDownload
+            End Get
+        End Property
+
+        Protected ReadOnly Property IsCurrentUserModerator As Boolean
+            Get
+                If _isCurrentUserModerator.HasValue Then
+                    Return _isCurrentUserModerator.Value
+                Else
+                    _isCurrentUserModerator = My.User.IsInRole("PKMDB-Moderator")
+                    Return _isCurrentUserModerator.Value
+                End If
+            End Get
+        End Property
+        Dim _isCurrentUserModerator As Boolean?
 
 #Region "Main"
         Public ReadOnly Property SpeciesID As Integer

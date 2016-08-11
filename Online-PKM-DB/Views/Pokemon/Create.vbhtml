@@ -1,4 +1,5 @@
-﻿@Code
+﻿@ModelType Online_PKM_DB.ViewModels.PokemonUploadViewModel
+@Code
     ViewData("Title") = "Create"
 End Code
 
@@ -9,6 +10,20 @@ End Code
 End If
 
 @Using (Html.BeginForm("Create", "Pokemon", FormMethod.Post, New With {.enctype = "multipart/form-data"}))
-   @<input type = "file" name="file" id="file" />
-   @<input type = "submit" value="Upload" Class="save" id="btnid" />
+   @Html.Raw("Unlisted: ")
+   @Html.CheckBoxFor(Function(x) x.IsUnlisted)
+    @<br />
+
+   @Html.Raw("Private: ")
+   @Html.CheckBoxFor(Function(x) x.IsPrivate)
+    @<br />
+
+   @Html.Raw("Disable Downloads: ")
+   @Html.CheckBoxFor(Function(x) x.DisableDownloading)
+    @<br />
+
+   @<input type="file" name="file" id="file" value="@Model.File" />
+    @<br />
+
+   @<input type="submit" value="Upload" Class="save" id="btnid" />
 End Using

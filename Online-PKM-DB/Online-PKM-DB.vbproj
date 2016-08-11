@@ -317,6 +317,7 @@
     <Compile Include="ViewModels\PK6ViewModel.vb" />
     <Compile Include="ViewModels\PKMSearchResults.vb" />
     <Compile Include="ViewModels\PKMUserSearchResults.vb" />
+    <Compile Include="ViewModels\PokemonUploadViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -406,6 +407,7 @@
     <Content Include="Views\Shared\PokemonDetails\_OTMisc.vbhtml" />
     <Content Include="Views\Shared\PokemonDetails\_PokemonMet.vbhtml" />
     <Content Include="Views\Shared\PokemonDetails\_PokemonMoves.vbhtml" />
+    <Content Include="Views\Pokemon\MyPokemon.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
