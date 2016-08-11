@@ -88,6 +88,35 @@ Namespace Controllers
             Return View(results)
         End Function
 
+        <Authorize>
+        Function MyPokemon(Optional page As Integer = 0) As ActionResult
+            Dim pageSize = My.Settings.PokemonListCountPerPage
+
+            Dim results As PKMSearchResults
+
+            Dim currentUserID As String = User.Identity.GetUserId
+
+            Using context As New PkmDBContext
+                Dim query = (From f In context.PokemonFormats
+                             From p In f.Pokemon
+                             From m In p.GeneralMetadata
+                             Where p.UploaderUserID = currentUserID
+                             Order By p.UploadDate Descending
+                             Select New With {.Metadata = m, .PokemonID = p.ID, .UploadDate = p.UploadDate, .UploaderUserID = p.UploaderUserID})
+                Dim entries = query.Skip(page * pageSize).
+                                    Take(pageSize).
+                                    AsEnumerable.
+                                    Select(Function(x) New GeneralPKMMetaDataViewModel(x.Metadata, x.PokemonID, x.UploadDate, x.UploaderUserID, Nothing)).ToList
+                Dim count = query.Count
+                results = New PKMSearchResults(entries, count, pageSize)
+            End Using
+
+            'Get the usernames
+            PkmDBHelper.UpdateUsernames(results)
+
+            Return View(results)
+        End Function
+
         ' GET: Pokemon/Details/5
         Function Details(ByVal id As Guid) As ActionResult
             Dim currentUserID As String = User.Identity.GetUserId
@@ -102,7 +131,10 @@ Namespace Controllers
                                  .Data = p.RawData,
                                  .Format = f,
                                  .UploadDate = p.UploadDate,
-                                 .UploaderID = p.UploaderUserID
+                                 .UploaderID = p.UploaderUserID,
+                                 .IsUnlisted = p.IsUnlisted,
+                                 .IsPrivate = p.IsPrivate,
+                                 .DisableDownloading = p.DisableDownloading
                                  }
                             ).FirstOrDefault
                 If query Is Nothing Then
@@ -122,10 +154,10 @@ Namespace Controllers
 
                 Select Case query.Format.StandardCode
                     Case "PK6"
-                        model = New PK6ViewModel(New PKHeX.PK6(query.Data), id, query.Format.FriendlyName, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
+                        model = New PK6ViewModel(New PKHeX.PK6(query.Data), id, query.Format.FriendlyName, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId, query.IsUnlisted, query.IsPrivate, query.DisableDownloading)
                         Return View("~/Views/Pokemon/GeneralPKM.vbhtml", model)
                     Case "PK5", "PK4", "PK3"
-                        model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id, query.Format.FriendlyName, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId)
+                        model = New GeneralPKMViewModel(PKHeX.PKMConverter.getPKMfromBytes(query.Data), id, query.Format.FriendlyName, query.UploadDate, uploaderUserID, uploaderUsername, User.Identity.GetUserId, query.IsUnlisted, query.IsPrivate, query.DisableDownloading)
                         Return View("~/Views/Pokemon/GeneralPKM.vbhtml", model)
                     Case Else
                         Return View("~/Views/Pokemon/UnsupportedPKMFormat.vbhtml")
@@ -173,21 +205,21 @@ Namespace Controllers
 
         ' GET: Pokemon/Create
         Function Create() As ActionResult
-            Return View()
+            Return View(New PokemonUploadViewModel)
         End Function
 
         ' POST: Pokemon/Create
         <HttpPost()>
-        Function Create(ByVal file As HttpPostedFileBase) As ActionResult
+        Function Create(ByVal model As PokemonUploadViewModel) As ActionResult
             'Try
             'Ensure the size is OK
-            If Not PKHeX.PKX.getIsPKM(file.ContentLength) Then
+            If Not PKHeX.PKX.getIsPKM(model.File.ContentLength) Then
                 Throw New Http.HttpResponseException(Net.HttpStatusCode.BadRequest)
             End If
 
             'Read the file
-            Dim data(file.ContentLength - 1) As Byte
-            file.InputStream.Read(data, 0, file.ContentLength)
+            Dim data(model.File.ContentLength - 1) As Byte
+            model.File.InputStream.Read(data, 0, model.File.ContentLength)
 
             'Detect the type
             Dim formatCode As String
@@ -218,7 +250,10 @@ Namespace Controllers
                         .FormatID = formatID,
                         .RawData = data,
                         .UploadDate = Date.UtcNow,
-                        .UploaderUserID = userID}
+                        .UploaderUserID = userID,
+                        .IsUnlisted = model.IsUnlisted,
+                        .IsPrivate = model.IsPrivate,
+                        .DisableDownloading = model.DisableDownloading}
                 context.Pokemon.Add(pkmModel)
 
                 Dim meta As New PokemonGeneralMetadata With {
