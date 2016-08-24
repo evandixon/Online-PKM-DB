@@ -1,11 +1,11 @@
 ﻿@ModelType Online_PKM_DB.ViewModels.PKMSearchResults
 @Code
-ViewData("Title") = "Index"
+    ViewData("Title") = Language.General.Upload
 End Code
 
-<h2>@Language.Index.Index</h2>
+<h2>@Language.General.Index</h2>
 
 <p>
-    @Html.ActionLink(Language.Index.Upload, "Create")
+    @Html.ActionLink(Language.General.Upload, "Create")
 </p>
 @Html.Partial("_PokemonList", Model)

@@ -238,6 +238,16 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_LocalResources\General.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>General.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_LocalResources\General.fr.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>General.fr.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.vb" />
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\identityConfig.vb" />
@@ -320,32 +330,32 @@
     <Compile Include="ViewModels\PKMSearchResults.vb" />
     <Compile Include="ViewModels\PKMUserSearchResults.vb" />
     <Compile Include="ViewModels\PokemonUploadViewModel.vb" />
-    <Compile Include="Views\Pokemon\App_LocalResources\Index.Designer.vb">
+    <Compile Include="Views\Pokemon\App_LocalResources\Create.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Index.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pokemon\App_LocalResources\Index.fr.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Index.fr.resx</DependentUpon>
+      <DependentUpon>Create.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="App_LocalResources\General.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>General.fr.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>Language</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_LocalResources\General.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>General.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>Language</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Pokemon\App_LocalResources\Index.resx">
+    <EmbeddedResource Include="Views\Pokemon\App_LocalResources\Create.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Index.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>Language</CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Pokemon\App_LocalResources\Index.fr.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Index.fr.Designer.vb</LastGenOutput>
+      <LastGenOutput>Create.Designer.vb</LastGenOutput>
       <CustomToolNamespace>Language</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>

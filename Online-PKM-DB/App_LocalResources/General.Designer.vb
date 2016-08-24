@@ -25,7 +25,7 @@ Namespace Language
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
-    Public Class Index
+    Public Class General
         
         Private Shared resourceMan As Global.System.Resources.ResourceManager
         
@@ -43,7 +43,7 @@ Namespace Language
         Public Shared ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
-                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Online_PKM_DB.Index", GetType(Index).Assembly)
+                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Online_PKM_DB.General", GetType(General).Assembly)
                     resourceMan = temp
                 End If
                 Return resourceMan
@@ -62,6 +62,15 @@ Namespace Language
             Set
                 resourceCulture = value
             End Set
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Create.
+        '''</summary>
+        Public Shared ReadOnly Property Create() As String
+            Get
+                Return ResourceManager.GetString("Create", resourceCulture)
+            End Get
         End Property
         
         '''<summary>
