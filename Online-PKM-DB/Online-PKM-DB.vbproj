@@ -248,6 +248,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>General.fr.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_LocalResources\Pokemon.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pokemon.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.vb" />
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\identityConfig.vb" />
@@ -355,6 +360,11 @@
     <EmbeddedResource Include="App_LocalResources\General.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>General.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>Language</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_LocalResources\Pokemon.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Pokemon.Designer.vb</LastGenOutput>
       <CustomToolNamespace>Language</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">

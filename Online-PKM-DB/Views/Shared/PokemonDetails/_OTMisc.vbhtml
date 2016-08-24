@@ -1,11 +1,11 @@
 ﻿@ModelType Online_PKM_DB.ViewModels.GeneralPKMViewModel
 <div>
-    <h4>OT/Misc</h4>
+    <h4>@Language.Pokemon.OTMisc</h4>
     <hr />
     <dl class="dl-horizontal">
         @* TID *@
         <dt>
-            @Html.DisplayNameFor(Function(model) model.TID)
+            @Language.Pokemon.TID
         </dt>
         <dd>
             @Html.DisplayFor(Function(model) model.TID)
@@ -13,7 +13,7 @@
 
         @* SID *@
         <dt>
-            @Html.DisplayNameFor(Function(model) model.SID)
+            @Language.Pokemon.SID
         </dt>
         <dd>
             @Html.DisplayFor(Function(model) model.SID)
@@ -21,7 +21,7 @@
 
         @* OT *@
         <dt>
-            @Html.DisplayNameFor(Function(model) model.OT)
+            @Language.Pokemon.OT
         </dt>
         <dd>
             <span class="@Model.LabelOTClass">@Html.DisplayFor(Function(model) model.OT)</span>
@@ -32,7 +32,7 @@
             Dim pk6 As Online_PKM_DB.ViewModels.PK6ViewModel = Model
 
             @<dt>
-                @Html.DisplayNameFor(Function(model) pk6.LatestHandler)
+                @Language.Pokemon.LatestHandler
             </dt>
             @<dd>
                 <span Class="@pk6.LatestHandlerClass">@Html.DisplayFor(Function(model) pk6.LatestHandler)</span>

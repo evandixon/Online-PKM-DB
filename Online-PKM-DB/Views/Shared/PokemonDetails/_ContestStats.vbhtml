@@ -5,12 +5,12 @@
     <table class="stat-table">
         <thead>
             <tr>
-                <td>Cool</td>
-                <td>Beauty</td>
-                <td>Cute</td>
-                <td>Clever</td>
-                <td>Tough</td>
-                <td>Sheen</td>
+                <td>@Language.Pokemon.Cool</td>
+                <td>@Language.Pokemon.Beauty</td>
+                <td>@Language.Pokemon.Cute</td>
+                <td>@Language.Pokemon.Clever</td>
+                <td>@Language.Pokemon.Tough</td>
+                <td>@Language.Pokemon.Sheen</td>
             </tr>
         </thead>
         <tr>
