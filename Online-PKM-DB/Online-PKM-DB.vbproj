@@ -340,6 +340,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Delete.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pokemon\App_LocalResources\GeneralPKM.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneralPKM.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App_LocalResources\General.fr.resx">
@@ -368,6 +373,11 @@
       <LastGenOutput>Delete.Designer.vb</LastGenOutput>
       <CustomToolNamespace>Language</CustomToolNamespace>
     </EmbeddedResource>
+    <Content Include="Views\Pokemon\App_LocalResources\GeneralPKM.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeneralPKM.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>Language</CustomToolNamespace>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
