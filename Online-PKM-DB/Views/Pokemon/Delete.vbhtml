@@ -1,16 +1,16 @@
 ﻿@ModelType Online_PKM_DB.ViewModels.GeneralPKMMetaDataViewModel
 @Code
-    ViewData("Title") = "Delete"
+    ViewData("Title") = @Language.General.Delete
 End Code
 
-<h2>Delete</h2>
+<h2>@Language.General.Delete</h2>
 <hr />
-<h3>Are you sure you want to delete @Html.DisplayFor(Function(model) model.Nickname)?</h3>
+<h3>@String.Format(Language.Delete.DeleteConfirmation, Html.DisplayFor(Function(model) model.Nickname))</h3>
 <div>
-    <dl class="dl-horizontal">
+<dl Class="dl-horizontal">
 
         <dt>
-            @Html.DisplayNameFor(Function(model) model.SpeciesName)
+            @Language.Delete.SpeciesName
         </dt>
 
         <dd>
@@ -18,7 +18,7 @@ End Code
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(Function(model) model.Level)
+            @Language.Delete.Level
         </dt>
 
         <dd>
@@ -26,7 +26,7 @@ End Code
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(Function(model) model.Ability)
+            @Language.Delete.Ability
         </dt>
 
         <dd>
@@ -34,7 +34,7 @@ End Code
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(Function(model) model.Move1)
+            @Language.Delete.Move1
         </dt>
 
         <dd>
@@ -42,7 +42,7 @@ End Code
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(Function(model) model.Move2)
+            @Language.Delete.Move2
         </dt>
 
         <dd>
@@ -50,7 +50,7 @@ End Code
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(Function(model) model.Move3)
+            @Language.Delete.Move3
         </dt>
 
         <dd>
@@ -58,7 +58,7 @@ End Code
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(Function(model) model.Move4)
+            @Language.Delete.Move4
         </dt>
 
         <dd>
@@ -67,7 +67,7 @@ End Code
 
         @* Uploader *@
         <dt>
-            Date Uploaded
+            @Language.Delete.DateUploaded
         </dt>
         <dd>
             @Html.DisplayFor(Function(model) model.UploadedDate)
@@ -75,7 +75,7 @@ End Code
 
         @* Upload Date *@
         <dt>
-            Uploaded By
+            @Language.Delete.UploadedBy
         </dt>
         <dd>
             @Html.ActionLink(Model.UploaderUsername, "SearchByUser", New With {.username = Model.UploaderUsername})
@@ -86,8 +86,8 @@ End Code
         @Html.AntiForgeryToken()
 
         @<div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="@Language.General.Delete" class="btn btn-default" /> |
+            @Html.ActionLink(Language.General.BackToList, "Index")
         </div>
     End Using
 </div>

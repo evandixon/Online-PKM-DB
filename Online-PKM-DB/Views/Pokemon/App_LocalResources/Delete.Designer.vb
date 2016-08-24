@@ -25,7 +25,7 @@ Namespace Language
     <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
-    Public Class General
+    Public Class Delete
         
         Private Shared resourceMan As Global.System.Resources.ResourceManager
         
@@ -43,7 +43,7 @@ Namespace Language
         Public Shared ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
-                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Online_PKM_DB.General", GetType(General).Assembly)
+                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Online_PKM_DB.Delete", GetType(Delete).Assembly)
                     resourceMan = temp
                 End If
                 Return resourceMan
@@ -65,47 +65,92 @@ Namespace Language
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Back to List.
+        '''  Looks up a localized string similar to Ability.
         '''</summary>
-        Public Shared ReadOnly Property BackToList() As String
+        Public Shared ReadOnly Property Ability() As String
             Get
-                Return ResourceManager.GetString("BackToList", resourceCulture)
+                Return ResourceManager.GetString("Ability", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Create.
+        '''  Looks up a localized string similar to Date Uploaded.
         '''</summary>
-        Public Shared ReadOnly Property Create() As String
+        Public Shared ReadOnly Property DateUploaded() As String
             Get
-                Return ResourceManager.GetString("Create", resourceCulture)
+                Return ResourceManager.GetString("DateUploaded", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Delete.
+        '''  Looks up a localized string similar to Are you sure you want to delete {0}?.
         '''</summary>
-        Public Shared ReadOnly Property Delete() As String
+        Public Shared ReadOnly Property DeleteConfirmation() As String
             Get
-                Return ResourceManager.GetString("Delete", resourceCulture)
+                Return ResourceManager.GetString("DeleteConfirmation", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Index.
+        '''  Looks up a localized string similar to Level.
         '''</summary>
-        Public Shared ReadOnly Property Index() As String
+        Public Shared ReadOnly Property Level() As String
             Get
-                Return ResourceManager.GetString("Index", resourceCulture)
+                Return ResourceManager.GetString("Level", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Upload.
+        '''  Looks up a localized string similar to Move 1.
         '''</summary>
-        Public Shared ReadOnly Property Upload() As String
+        Public Shared ReadOnly Property Move1() As String
             Get
-                Return ResourceManager.GetString("Upload", resourceCulture)
+                Return ResourceManager.GetString("Move1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Move 2.
+        '''</summary>
+        Public Shared ReadOnly Property Move2() As String
+            Get
+                Return ResourceManager.GetString("Move2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Move 3.
+        '''</summary>
+        Public Shared ReadOnly Property Move3() As String
+            Get
+                Return ResourceManager.GetString("Move3", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Move 4.
+        '''</summary>
+        Public Shared ReadOnly Property Move4() As String
+            Get
+                Return ResourceManager.GetString("Move4", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Species.
+        '''</summary>
+        Public Shared ReadOnly Property SpeciesName() As String
+            Get
+                Return ResourceManager.GetString("SpeciesName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Uploaded By.
+        '''</summary>
+        Public Shared ReadOnly Property UploadedBy() As String
+            Get
+                Return ResourceManager.GetString("UploadedBy", resourceCulture)
             End Get
         End Property
     End Class

@@ -117,19 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BackToList" xml:space="preserve">
-    <value>Back to List</value>
+  <data name="Ability" xml:space="preserve">
+    <value>Ability</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>Create</value>
+  <data name="DateUploaded" xml:space="preserve">
+    <value>Date Uploaded</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="DeleteConfirmation" xml:space="preserve">
+    <value>Are you sure you want to delete {0}?</value>
   </data>
-  <data name="Index" xml:space="preserve">
-    <value>Index</value>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
   </data>
-  <data name="Upload" xml:space="preserve">
-    <value>Upload</value>
+  <data name="Move1" xml:space="preserve">
+    <value>Move 1</value>
+  </data>
+  <data name="Move2" xml:space="preserve">
+    <value>Move 2</value>
+  </data>
+  <data name="Move3" xml:space="preserve">
+    <value>Move 3</value>
+  </data>
+  <data name="Move4" xml:space="preserve">
+    <value>Move 4</value>
+  </data>
+  <data name="SpeciesName" xml:space="preserve">
+    <value>Species</value>
+  </data>
+  <data name="UploadedBy" xml:space="preserve">
+    <value>Uploaded By</value>
   </data>
 </root>

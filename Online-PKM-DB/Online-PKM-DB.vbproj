@@ -335,6 +335,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Create.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pokemon\App_LocalResources\Delete.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Delete.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App_LocalResources\General.fr.resx">
@@ -356,6 +361,11 @@
     <EmbeddedResource Include="Views\Pokemon\App_LocalResources\Create.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Create.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>Language</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Pokemon\App_LocalResources\Delete.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Delete.Designer.vb</LastGenOutput>
       <CustomToolNamespace>Language</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
