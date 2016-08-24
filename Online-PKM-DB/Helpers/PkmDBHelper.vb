@@ -2,17 +2,55 @@
 Imports Online_PKM_DB.ViewModels
 
 Namespace Helpers
+
+    ''' <summary>
+    ''' Helper methods for interacting with a <see cref="PkmDBContext"/>.
+    ''' </summary>
     Public Class PkmDBHelper
-        Public Shared Function GetPK6FormatID(context As PkmDBContext) As Guid
-            Dim match = context.PokemonFormats.FirstOrDefault(Function(x) x.StandardCode = "PK6")
+
+        Private Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' Gets or creates the <see cref="EntityType"/> for PKM files.
+        ''' </summary>
+        ''' <param name="context">Instance of the current <see cref="PkmDBContext"/>.</param>
+        ''' <returns>The ID of the PKM entity type.</returns>
+        Public Shared Function GetPKMEntityType(context As PkmDBContext) As Guid
+            Return GetEntityType("PKM", context)
+        End Function
+
+        ''' <summary>
+        ''' Gets or creates the <see cref="EntityType"/> with the given standard code.
+        ''' </summary>
+        ''' <param name="typeCode">Standard code of the entity type.</param>
+        ''' <param name="context">Instance of the current <see cref="PkmDBContext"/>.</param>
+        ''' <returns>The ID of the entity type with the given standard code.</returns>
+        Public Shared Function GetEntityType(typeCode As String, context As PkmDBContext) As Guid
+            Dim match = context.EntityTypes.FirstOrDefault(Function(x) x.StandardCode = typeCode)
             If match Is Nothing Then
-                match = New PokemonFormat With {.ID = Guid.NewGuid, .StandardCode = "PK6", .FriendlyName = "PK6"}
-                context.PokemonFormats.Add(match)
+                match = New EntityType With {.ID = Guid.NewGuid, .StandardCode = typeCode, .FriendlyName = typeCode}
+                context.EntityTypes.Add(match)
                 context.SaveChanges()
             End If
             Return match.ID
         End Function
 
+        ''' <summary>
+        ''' Gets or creates the PK6 PKM format.
+        ''' </summary>
+        ''' <param name="context">Instance of the current <see cref="PkmDBContext"/>.</param>
+        ''' <returns>The ID of the PK6 PKM format.</returns>
+        Public Shared Function GetPK6FormatID(context As PkmDBContext) As Guid
+            Return GetFormatID("PK6", context)
+        End Function
+
+        ''' <summary>
+        ''' Gets or creates the PKM format with the given standard code.
+        ''' </summary>
+        ''' <param name="formatCode">Standard code of the PKM format.</param>
+        ''' <param name="context">Instance of the current <see cref="PkmDBContext"/>.</param>
+        ''' <returns>The ID of the PKM format with the given standard code.</returns>
         Public Shared Function GetFormatID(formatCode As String, context As PkmDBContext) As Guid
             Dim match = context.PokemonFormats.FirstOrDefault(Function(x) x.StandardCode = formatCode)
             If match Is Nothing Then

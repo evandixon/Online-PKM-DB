@@ -8,8 +8,9 @@ Namespace Models.Pokemon
             MyBase.New("PkmDB")
         End Sub
 
+        Public Property EntityTypes As DbSet(Of EntityType)
         Public Property PokemonFormats As DbSet(Of PokemonFormat)
-        Public Property Pokemon As DbSet(Of Pokemon)
+        Public Property Entities As DbSet(Of Entity)
         Public Property GeneralPokemonMetadata As DbSet(Of PokemonGeneralMetadata)
 
         Protected Overrides Sub OnModelCreating(modelBuilder As DbModelBuilder)

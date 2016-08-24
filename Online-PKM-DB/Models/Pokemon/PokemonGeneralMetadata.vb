@@ -14,7 +14,7 @@ Namespace Models.Pokemon
         <Required> Public Property Move4 As Integer
         <Required> Public Property OTName As String
 
-        Public Overridable Property Pokemon As Pokemon
+        Public Overridable Property Pokemon As Entity
     End Class
 End Namespace
 

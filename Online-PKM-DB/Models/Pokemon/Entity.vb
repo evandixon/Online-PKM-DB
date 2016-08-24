@@ -1,7 +1,10 @@
 ﻿Imports System.ComponentModel.DataAnnotations
 
 Namespace Models.Pokemon
-    Public Class Pokemon
+    ''' <summary>
+    ''' An uploadable entity such as a Pokémon or a Wondercard
+    ''' </summary>
+    Public Class Entity
         <Required> <Key> Public Property ID As Guid
         <Required> Public Property FormatID As Guid
         <Required> Public Property RawData As Byte()

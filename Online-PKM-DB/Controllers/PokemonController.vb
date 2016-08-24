@@ -23,7 +23,7 @@ Namespace Controllers
             Dim results As PKMSearchResults
             Using context As New PkmDBContext
                 Dim query = (From f In context.PokemonFormats
-                             From p In f.Pokemon
+                             From p In f.Entities
                              From m In p.GeneralMetadata
                              Where Not p.IsUnlisted AndAlso (Not p.IsPrivate OrElse p.UploaderUserID = currentUserID OrElse isModerator)
                              Order By p.UploadDate Descending
@@ -69,7 +69,7 @@ Namespace Controllers
 
             Using context As New PkmDBContext
                 Dim query = (From f In context.PokemonFormats
-                             From p In f.Pokemon
+                             From p In f.Entities
                              From m In p.GeneralMetadata
                              Where p.UploaderUserID = userID AndAlso Not p.IsUnlisted AndAlso (Not p.IsPrivate OrElse p.UploaderUserID = currentUserID OrElse isModerator)
                              Order By p.UploadDate Descending
@@ -98,7 +98,7 @@ Namespace Controllers
 
             Using context As New PkmDBContext
                 Dim query = (From f In context.PokemonFormats
-                             From p In f.Pokemon
+                             From p In f.Entities
                              From m In p.GeneralMetadata
                              Where p.UploaderUserID = currentUserID
                              Order By p.UploadDate Descending

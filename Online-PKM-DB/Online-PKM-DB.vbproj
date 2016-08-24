@@ -82,7 +82,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PKHeX, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\packages\PKHeX.1.0.0-CI192\lib\net40\PKHeX.exe</HintPath>
+      <HintPath>..\packages\PKHeX.1.0.0-CI218\lib\net40\PKHeX.exe</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -287,9 +287,10 @@
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\IdentityModels.vb" />
     <Compile Include="Models\ManageViewModels.vb" />
+    <Compile Include="Models\Pokemon\EntityType.vb" />
     <Compile Include="Models\Pokemon\PkmDBContext.vb" />
     <Compile Include="Models\Pokemon\PokemonGeneralMetadata.vb" />
-    <Compile Include="Models\Pokemon\Pokemon.vb" />
+    <Compile Include="Models\Pokemon\Entity.vb" />
     <Compile Include="Models\Pokemon\PokemonFormat.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
