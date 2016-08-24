@@ -3,9 +3,9 @@
 ViewData("Title") = "Index"
 End Code
 
-<h2>Index</h2>
+<h2>@Language.Index.Index</h2>
 
 <p>
-    @Html.ActionLink("Upload", "Create")
+    @Html.ActionLink(Language.Index.Upload, "Create")
 </p>
 @Html.Partial("_PokemonList", Model)

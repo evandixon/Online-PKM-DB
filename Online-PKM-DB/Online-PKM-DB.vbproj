@@ -320,6 +320,16 @@
     <Compile Include="ViewModels\PKMSearchResults.vb" />
     <Compile Include="ViewModels\PKMUserSearchResults.vb" />
     <Compile Include="ViewModels\PokemonUploadViewModel.vb" />
+    <Compile Include="Views\Pokemon\App_LocalResources\Index.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pokemon\App_LocalResources\Index.fr.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.fr.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -327,6 +337,16 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Pokemon\App_LocalResources\Index.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Index.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>Language</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Pokemon\App_LocalResources\Index.fr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Index.fr.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>Language</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
