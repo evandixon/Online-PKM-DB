@@ -6,6 +6,7 @@ Namespace Models.Pokemon
     ''' </summary>
     Public Class Entity
         <Required> <Key> Public Property ID As Guid
+        <Required> Public Property EntityTypeID As Guid
         <Required> Public Property FormatID As Guid
         <Required> Public Property RawData As Byte()
         Public Property UploaderUserID As String
@@ -14,6 +15,7 @@ Namespace Models.Pokemon
         <Required> Public Property IsPrivate As Boolean
         <Required> Public Property DisableDownloading As Boolean
 
+        Public Overridable Property EntityType As EntityType
         Public Overridable Property Format As PokemonFormat
         Public Overridable Property GeneralMetadata As ICollection(Of PokemonGeneralMetadata)
     End Class

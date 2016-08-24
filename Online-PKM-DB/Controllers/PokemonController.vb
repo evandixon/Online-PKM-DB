@@ -124,7 +124,7 @@ Namespace Controllers
 
             Dim model As Object
             Using context As New PkmDBContext
-                Dim query = (From p In context.Pokemon
+                Dim query = (From p In context.Entities
                              Let f = p.Format
                              Where p.ID = id AndAlso (Not p.IsPrivate OrElse p.UploaderUserID = currentUserID OrElse isModerator)
                              Select New With {
@@ -172,7 +172,7 @@ Namespace Controllers
             Dim data As Byte()
             Dim name As String
             Using context As New PkmDBContext
-                Dim query = (From p In context.Pokemon
+                Dim query = (From p In context.Entities
                              Let f = p.Format
                              Where p.ID = id AndAlso (Not p.IsPrivate OrElse p.UploaderUserID = currentUserID OrElse isModerator) AndAlso (Not p.DisableDownloading OrElse p.UploaderUserID = currentUserID OrElse isModerator)
                              Select New With {
@@ -245,7 +245,7 @@ Namespace Controllers
                     userID = User.Identity.GetUserId
                 End If
                 Dim formatID = PkmDBHelper.GetFormatID(formatCode, context)
-                Dim pkmModel As New Pokemon With
+                Dim pkmModel As New Entity With
                         {.ID = newPKMID,
                         .FormatID = formatID,
                         .RawData = data,
@@ -254,7 +254,7 @@ Namespace Controllers
                         .IsUnlisted = model.IsUnlisted,
                         .IsPrivate = model.IsPrivate,
                         .DisableDownloading = model.DisableDownloading}
-                context.Pokemon.Add(pkmModel)
+                context.Entities.Add(pkmModel)
 
                 Dim meta As New PokemonGeneralMetadata With {
                         .ID = Guid.NewGuid,
@@ -302,7 +302,7 @@ Namespace Controllers
                 Case "GET"
                     Dim metadata As GeneralPKMMetaDataViewModel
                     Using context As New PkmDBContext
-                        Dim model = (From p In context.Pokemon
+                        Dim model = (From p In context.Entities
                                      From m In p.GeneralMetadata
                                      Where p.ID = id
                                      Select New With {.Metadata = m, .PokemonID = p.ID, .uploadDate = p.UploadDate, .uploaderID = p.UploaderUserID}).FirstOrDefault
@@ -327,14 +327,14 @@ Namespace Controllers
                     End Using
                 Case "POST"
                     Using context As New PkmDBContext
-                        Dim uploaderID As String = context.Pokemon.Where(Function(x) x.ID = id).Select(Function(x) x.UploaderUserID).FirstOrDefault
+                        Dim uploaderID As String = context.Entities.Where(Function(x) x.ID = id).Select(Function(x) x.UploaderUserID).FirstOrDefault
                         If Not (User.Identity.GetUserId = uploaderID OrElse User.IsInRole("PKMDB-Moderator")) Then
                             Throw New Http.HttpResponseException(Net.HttpStatusCode.Unauthorized)
                         Else
-                            context.Pokemon.RemoveRange(context.Pokemon.Where(Function(x) x.ID = id))
+                            context.Entities.RemoveRange(context.Entities.Where(Function(x) x.ID = id))
                             context.SaveChanges()
                         End If
-                        context.Pokemon.RemoveRange(context.Pokemon.Where(Function(x) x.ID = id))
+                        context.Entities.RemoveRange(context.Entities.Where(Function(x) x.ID = id))
                         context.SaveChanges()
                     End Using
                     Return RedirectToAction("Index")

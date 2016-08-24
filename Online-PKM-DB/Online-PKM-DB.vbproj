@@ -287,6 +287,7 @@
     <Compile Include="Models\AccountViewModels.vb" />
     <Compile Include="Models\IdentityModels.vb" />
     <Compile Include="Models\ManageViewModels.vb" />
+    <Compile Include="Models\Pokemon\Category.vb" />
     <Compile Include="Models\Pokemon\EntityType.vb" />
     <Compile Include="Models\Pokemon\PkmDBContext.vb" />
     <Compile Include="Models\Pokemon\PokemonGeneralMetadata.vb" />
