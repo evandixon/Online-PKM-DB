@@ -210,13 +210,17 @@ Namespace Controllers
 
         ' POST: Pokemon/Create
         <HttpPost()>
-        Function Create(ByVal model As PokemonUploadViewModel) As ActionResult
-            'Try
-            'Ensure the size is OK
-            If Not PKHeX.PKX.getIsPKM(model.File.ContentLength) Then
+        Function Create(model As PokemonUploadViewModel) As ActionResult
+            'Determine what kind of entity this is
+            If PKHeX.PKX.getIsPKM(model.File.ContentLength) Then
+                'It's a PKHeX pkm file
+                Return CreatePokemon(model)
+            Else
                 Throw New Http.HttpResponseException(Net.HttpStatusCode.BadRequest)
             End If
+        End Function
 
+        Private Function CreatePokemon(model As PokemonUploadViewModel) As ActionResult
             'Read the file
             Dim data(model.File.ContentLength - 1) As Byte
             model.File.InputStream.Read(data, 0, model.File.ContentLength)
@@ -225,6 +229,8 @@ Namespace Controllers
             Dim formatCode As String
             Dim pkm = PKHeX.PKMConverter.getPKMfromBytes(data)
             Select Case PKHeX.PKMConverter.getPKMDataFormat(data)
+                Case 7
+                    formatCode = "PK7"
                 Case 6
                     formatCode = "PK6"
                 Case 5
@@ -233,6 +239,10 @@ Namespace Controllers
                     formatCode = "PK4"
                 Case 3
                     formatCode = "PK3"
+                Case 2
+                    formatCode = "PK2"
+                Case 1
+                    formatCode = "PK1"
                 Case Else
                     Throw New Http.HttpResponseException(Net.HttpStatusCode.BadRequest)
             End Select
@@ -253,7 +263,8 @@ Namespace Controllers
                         .UploaderUserID = userID,
                         .IsUnlisted = model.IsUnlisted,
                         .IsPrivate = model.IsPrivate,
-                        .DisableDownloading = model.DisableDownloading}
+                        .DisableDownloading = model.DisableDownloading,
+                        .EntityTypeID = PkmDBHelper.GetPKMEntityType(context)}
                 context.Entities.Add(pkmModel)
 
                 Dim meta As New PokemonGeneralMetadata With {
@@ -274,9 +285,6 @@ Namespace Controllers
                 context.SaveChanges()
             End Using
             Return RedirectToAction("Details", New With {.id = newPKMID})
-            'Catch ex As Exception
-            '    Return View()
-            'End Try
         End Function
 
         '' GET: Pokemon/Edit/5
