@@ -329,6 +329,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.vb" />
     <Compile Include="Results\ChallengeResult.vb" />
     <Compile Include="Startup.vb" />
+    <Compile Include="ViewModels\CategoryListViewModel.vb" />
     <Compile Include="ViewModels\GeneralPKMMetaDataViewModel.vb" />
     <Compile Include="ViewModels\GeneralPKMViewModel.vb" />
     <Compile Include="ViewModels\PagerViewModel.vb" />

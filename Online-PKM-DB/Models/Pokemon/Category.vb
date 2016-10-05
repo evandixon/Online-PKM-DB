@@ -55,6 +55,7 @@ Namespace Models.Pokemon
         ''' </summary>
         Public Overridable Property EntityType As EntityType
 
+        Public Overridable Property Entities As ICollection(Of Entity)
     End Class
 
 End Namespace

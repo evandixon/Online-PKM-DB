@@ -7,6 +7,7 @@ Imports System.Net
 Imports System.Web
 Imports System.Web.Mvc
 Imports Online_PKM_DB.Models.Pokemon
+Imports Online_PKM_DB.ViewModels
 
 Namespace Controllers
     Public Class CategoriesController
@@ -16,6 +17,33 @@ Namespace Controllers
 
         ' GET: Categories
         Function Index() As ActionResult
+            Dim vm As New CategoryListViewModel
+            Using context As New PkmDBContext
+                Dim query = From c In context.Categories
+                            Let u = c.Entities.OrderByDescending(Function(x) x.UploadDate).FirstOrDefault
+                            Select New CategoryListViewModel With {
+                                .ID = c.ID,
+                                .Name = c.Name,
+                                .Description = c.Description,
+                                .UploadCount = c.Entities.Count,
+                                .LastUploadDate = If(u IsNot Nothing, u.UploadDate, Nothing),
+                                .LastUploadUserID = If(u IsNot Nothing, u.UploaderUserID, Nothing),
+                                .OwnerUploadUserID = c.OwnerID,
+                                .IsSiteCategory = c.IsSiteCategory,
+                                .SortOrder = c.SortOrder,
+                                .IsLocked = c.IsLocked,
+                                .IsHidden = c.IsHidden
+                            }
+
+                'Todo:
+                '- Add Where
+                '- Process the query (apply heiarchy)
+                '- Remove NotImplementedException below
+                '- (more?)
+                Throw New NotImplementedException
+            End Using
+
+
             Dim categories = db.Categories.Include(Function(c) c.EntityType)
             Return View(categories.ToList())
         End Function

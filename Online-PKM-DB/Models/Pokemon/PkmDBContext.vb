@@ -8,6 +8,7 @@ Namespace Models.Pokemon
             MyBase.New("PkmDB")
         End Sub
 
+        Public Property Categories As DbSet(Of Category)
         Public Property EntityTypes As DbSet(Of EntityType)
         Public Property PokemonFormats As DbSet(Of PokemonFormat)
         Public Property Entities As DbSet(Of Entity)
@@ -17,8 +18,6 @@ Namespace Models.Pokemon
             MyBase.OnModelCreating(modelBuilder)
             Database.SetInitializer(New MigrateDatabaseToLatestVersion(Of PkmDBContext, Migrations.Configuration))
         End Sub
-
-        Public Property Categories As System.Data.Entity.DbSet(Of Models.Pokemon.Category)
     End Class
 End Namespace
 

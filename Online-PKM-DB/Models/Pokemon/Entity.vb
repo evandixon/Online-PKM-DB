@@ -6,6 +6,7 @@ Namespace Models.Pokemon
     ''' </summary>
     Public Class Entity
         <Required> <Key> Public Property ID As Guid
+        Public Property ParentCategoryID As Guid
         <Required> Public Property EntityTypeID As Guid
         <Required> Public Property FormatID As Guid
         <Required> Public Property RawData As Byte()
@@ -18,6 +19,7 @@ Namespace Models.Pokemon
         Public Overridable Property EntityType As EntityType
         Public Overridable Property Format As PokemonFormat
         Public Overridable Property GeneralMetadata As ICollection(Of PokemonGeneralMetadata)
+        Public Overridable Property ParentCategory As Category
     End Class
 End Namespace
 
