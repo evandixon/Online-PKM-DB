@@ -120,19 +120,19 @@
   <data name="AnonymousNotice" xml:space="preserve">
     <value>Note: you are not logged in.  If you proceed to upload this Pokémon, you will be unable to modify or delete it (when these features are available).</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>Create</value>
-  </data>
   <data name="DisableDownloadsLabel" xml:space="preserve">
-    <value>DisableDownloads</value>
+    <value>Disable Downloads</value>
   </data>
   <data name="PrivateLabel" xml:space="preserve">
     <value>Private</value>
   </data>
   <data name="UnlistedLabel" xml:space="preserve">
-    <value>Unlisted: </value>
+    <value>Unlisted</value>
   </data>
   <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="UploadTitle" xml:space="preserve">
     <value>Upload</value>
   </data>
 </root>

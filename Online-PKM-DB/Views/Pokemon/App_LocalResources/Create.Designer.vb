@@ -74,16 +74,7 @@ Namespace Language
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Create.
-        '''</summary>
-        Public Shared ReadOnly Property Create() As String
-            Get
-                Return ResourceManager.GetString("Create", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to DisableDownloads.
+        '''  Looks up a localized string similar to Disable Downloads.
         '''</summary>
         Public Shared ReadOnly Property DisableDownloadsLabel() As String
             Get
@@ -101,7 +92,7 @@ Namespace Language
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Unlisted: .
+        '''  Looks up a localized string similar to Unlisted.
         '''</summary>
         Public Shared ReadOnly Property UnlistedLabel() As String
             Get
@@ -115,6 +106,15 @@ Namespace Language
         Public Shared ReadOnly Property Upload() As String
             Get
                 Return ResourceManager.GetString("Upload", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Upload.
+        '''</summary>
+        Public Shared ReadOnly Property UploadTitle() As String
+            Get
+                Return ResourceManager.GetString("UploadTitle", resourceCulture)
             End Get
         End Property
     End Class
