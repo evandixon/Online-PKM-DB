@@ -82,7 +82,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PKHeX, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\packages\PKHeX.1.0.0-CI218\lib\net40\PKHeX.exe</HintPath>
+      <HintPath>..\packages\PKHeX.1.0.0-CI459\lib\net40\PKHeX.exe</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -385,6 +385,7 @@
       <LastGenOutput>Delete.Designer.vb</LastGenOutput>
       <CustomToolNamespace>Language</CustomToolNamespace>
     </EmbeddedResource>
+    <Content Include="Resources\text\gen3\text_ItemsG2_en.txt" />
     <Content Include="Views\Pokemon\App_LocalResources\GeneralPKM.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeneralPKM.Designer.vb</LastGenOutput>
