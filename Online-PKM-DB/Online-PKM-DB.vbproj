@@ -289,6 +289,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
     <Compile Include="Controllers\AccountController.vb" />
     <Compile Include="Controllers\api\AccountController.vb" />
+    <Compile Include="Controllers\CategoriesController.vb" />
     <Compile Include="Controllers\ManageController.vb" />
     <Compile Include="Controllers\PokemonController.vb" />
     <Compile Include="Global.asax.vb">
@@ -470,6 +471,11 @@
     <Content Include="Views\Shared\PokemonDetails\_PokemonMet.vbhtml" />
     <Content Include="Views\Shared\PokemonDetails\_PokemonMoves.vbhtml" />
     <Content Include="Views\Pokemon\MyPokemon.vbhtml" />
+    <Content Include="Views\Categories\Create.vbhtml" />
+    <Content Include="Views\Categories\Delete.vbhtml" />
+    <Content Include="Views\Categories\Details.vbhtml" />
+    <Content Include="Views\Categories\Edit.vbhtml" />
+    <Content Include="Views\Categories\Index.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

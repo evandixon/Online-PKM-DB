@@ -17,6 +17,8 @@ Namespace Models.Pokemon
             MyBase.OnModelCreating(modelBuilder)
             Database.SetInitializer(New MigrateDatabaseToLatestVersion(Of PkmDBContext, Migrations.Configuration))
         End Sub
+
+        Public Property Categories As System.Data.Entity.DbSet(Of Models.Pokemon.Category)
     End Class
 End Namespace
 
