@@ -13,7 +13,7 @@
                                                                                    'Todo: move functionality to PKHeX
                                                                                    Dim raw = PKHeX.Util.getStringList("languages")
                                                                                    Dim parts = raw.Select(Function(x) x.Split(","))
-                                                                                   Dim data(8) As String
+                                                                                   Dim data(raw.Length) As String
                                                                                    For Each item In parts
                                                                                        If IsNumeric(item(0)) Then
                                                                                            data(CInt(item(0))) = item(1)

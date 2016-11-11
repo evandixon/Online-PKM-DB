@@ -1,4 +1,6 @@
-﻿Imports System.Web.Mvc
+﻿Imports System.Data.Entity
+Imports System.Threading.Tasks
+Imports System.Web.Mvc
 Imports Microsoft.AspNet.Identity
 Imports Online_PKM_DB.Helpers
 Imports Online_PKM_DB.Models.Pokemon
@@ -17,7 +19,7 @@ Namespace Controllers
             Dim pageSize = My.Settings.PokemonListCountPerPage
 
             Dim currentUserID As String = User.Identity.GetUserId
-            Dim isModerator As Boolean = User.IsInRole("PKMDB-Moderator")
+            Dim isModerator As Boolean = PermissionsHelper.IsModerator(User)
 
             'Get the PKM info
             Dim results As PKMSearchResults
@@ -65,7 +67,7 @@ Namespace Controllers
             End If
 
             Dim currentUserID As String = User.Identity.GetUserId
-            Dim isModerator As Boolean = User.IsInRole("PKMDB-Moderator")
+            Dim isModerator As Boolean = PermissionsHelper.IsModerator(User)
 
             Using context As New PkmDBContext
                 Dim query = (From f In context.PokemonFormats
@@ -120,7 +122,7 @@ Namespace Controllers
         ' GET: Pokemon/Details/5
         Function Details(ByVal id As Guid) As ActionResult
             Dim currentUserID As String = User.Identity.GetUserId
-            Dim isModerator As Boolean = User.IsInRole("PKMDB-Moderator")
+            Dim isModerator As Boolean = PermissionsHelper.IsModerator(User)
 
             Dim model As Object
             Using context As New PkmDBContext
@@ -167,7 +169,7 @@ Namespace Controllers
 
         Function Download(ByVal id As Guid) As ActionResult
             Dim currentUserID As String = User.Identity.GetUserId
-            Dim isModerator As Boolean = User.IsInRole("PKMDB-Moderator")
+            Dim isModerator As Boolean = PermissionsHelper.IsModerator(User)
 
             Dim data As Byte()
             Dim name As String
@@ -287,6 +289,48 @@ Namespace Controllers
             Return RedirectToAction("Details", New With {.id = newPKMID})
         End Function
 
+        Async Function EditAccess(id As Guid) As Task(Of ActionResult)
+            Dim vm As New PokemonEditAccessViewModel
+            vm.ID = id
+
+            Using context As New PkmDBContext
+
+                If Not PermissionsHelper.CanEditEntityAccess(id, User, context) Then
+                    Throw New Http.HttpResponseException(Net.HttpStatusCode.Unauthorized)
+                End If
+
+                Dim entity = Await (From e In context.Entities
+                                    Where e.ID = id
+                                    Select e.DisableDownloading, e.IsPrivate, e.IsUnlisted).FirstAsync
+
+                vm.DisableDownloading = entity.DisableDownloading
+                vm.IsPrivate = entity.IsPrivate
+                vm.IsUnlisted = entity.IsUnlisted
+            End Using
+
+            Return View(vm)
+        End Function
+
+        <HttpPost>
+        Async Function EditAccess(model As PokemonEditAccessViewModel) As Task(Of ActionResult)
+            Using context As New PkmDBContext
+                If Not PermissionsHelper.CanEditEntityAccess(model.ID, User, context) Then
+                    Throw New Http.HttpResponseException(Net.HttpStatusCode.Unauthorized)
+                End If
+
+                Dim entity = Await (From e In context.Entities
+                                    Where e.ID = model.ID).FirstAsync
+
+                entity.DisableDownloading = model.DisableDownloading
+                entity.IsPrivate = model.IsPrivate
+                entity.IsUnlisted = model.IsUnlisted
+
+                Await context.SaveChangesAsync
+            End Using
+
+            Return RedirectToAction("Details", New With {.id = model.ID})
+        End Function
+
         '' GET: Pokemon/Edit/5
         'Function Edit(ByVal id As Integer) As ActionResult
         '    Return View()
@@ -317,7 +361,7 @@ Namespace Controllers
                         If model Is Nothing Then
                             Return HttpNotFound()
                         Else
-                            If Not (User.Identity.GetUserId = model.uploaderID OrElse User.IsInRole("PKMDB-Moderator")) Then
+                            If Not (User.Identity.GetUserId = model.uploaderID OrElse PermissionsHelper.IsModerator(User)) Then
                                 Throw New Http.HttpResponseException(Net.HttpStatusCode.Unauthorized)
                             Else
                                 Dim username As String
@@ -336,7 +380,7 @@ Namespace Controllers
                 Case "POST"
                     Using context As New PkmDBContext
                         Dim uploaderID As String = context.Entities.Where(Function(x) x.ID = id).Select(Function(x) x.UploaderUserID).FirstOrDefault
-                        If Not (User.Identity.GetUserId = uploaderID OrElse User.IsInRole("PKMDB-Moderator")) Then
+                        If Not (User.Identity.GetUserId = uploaderID OrElse PermissionsHelper.IsModerator(User)) Then
                             Throw New Http.HttpResponseException(Net.HttpStatusCode.Unauthorized)
                         Else
                             context.Entities.RemoveRange(context.Entities.Where(Function(x) x.ID = id))

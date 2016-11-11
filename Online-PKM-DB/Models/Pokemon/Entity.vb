@@ -6,7 +6,7 @@ Namespace Models.Pokemon
     ''' </summary>
     Public Class Entity
         <Required> <Key> Public Property ID As Guid
-        Public Property ParentCategoryID As Guid
+        Public Property ParentCategoryID As Guid?
         <Required> Public Property EntityTypeID As Guid
         <Required> Public Property FormatID As Guid
         <Required> Public Property RawData As Byte()

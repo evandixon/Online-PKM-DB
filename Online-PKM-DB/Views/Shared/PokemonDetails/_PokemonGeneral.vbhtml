@@ -173,7 +173,13 @@
     @If Model.CanDownload Then
         @Html.ActionLink("Download " & Model.PokemonFormatFriendlyName, "Download", New With {.id = Model.PokemonID})
     End If
-    @If Model.CanDownload AndAlso Model.CanDelete Then
+    @If Model.CanDownload AndAlso Model.CanEditAccess Then
+        @Html.Raw(" | ")
+    End If
+    @If Model.CanDelete() Then
+        @<span>@Html.ActionLink("Edit Access", "EditAccess", New With {.id = Model.PokemonID})</span>
+    End If
+    @If Model.CanEditAccess AndAlso Model.CanDelete Then
         @Html.Raw(" | ")
     End If
     @If Model.CanDelete() Then

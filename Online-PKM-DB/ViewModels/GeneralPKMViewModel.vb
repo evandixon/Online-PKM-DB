@@ -42,6 +42,12 @@ Namespace ViewModels
             End Get
         End Property
 
+        Public ReadOnly Property CanEditAccess As Boolean
+            Get
+                Return CanDelete
+            End Get
+        End Property
+
         Public ReadOnly Property ShowUnlistedNotice() As Boolean
             Get
                 Return IsUnlisted AndAlso (UploaderID = CurrentUserID OrElse IsCurrentUserModerator)

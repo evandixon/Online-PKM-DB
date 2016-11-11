@@ -295,6 +295,7 @@
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PermissionsHelper.vb" />
     <Compile Include="Helpers\PKHeXResources.vb" />
     <Compile Include="Helpers\PkmDBHelper.vb" />
     <Compile Include="Helpers\RequireQueryStringValuesAttribute.vb" />
@@ -336,6 +337,7 @@
     <Compile Include="ViewModels\PK6ViewModel.vb" />
     <Compile Include="ViewModels\PKMSearchResults.vb" />
     <Compile Include="ViewModels\PKMUserSearchResults.vb" />
+    <Compile Include="ViewModels\PokemonEditAccessViewModel.vb" />
     <Compile Include="ViewModels\PokemonUploadViewModel.vb" />
     <Compile Include="Views\Pokemon\App_LocalResources\Create.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -386,11 +388,11 @@
       <CustomToolNamespace>Language</CustomToolNamespace>
     </EmbeddedResource>
     <Content Include="Resources\text\gen3\text_ItemsG2_en.txt" />
-    <Content Include="Views\Pokemon\App_LocalResources\GeneralPKM.resx">
+    <EmbeddedResource Include="Views\Pokemon\App_LocalResources\GeneralPKM.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeneralPKM.Designer.vb</LastGenOutput>
       <CustomToolNamespace>Language</CustomToolNamespace>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -478,6 +480,7 @@
     <Content Include="Views\Categories\Details.vbhtml" />
     <Content Include="Views\Categories\Edit.vbhtml" />
     <Content Include="Views\Categories\Index.vbhtml" />
+    <Content Include="Views\Pokemon\EditAccess.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

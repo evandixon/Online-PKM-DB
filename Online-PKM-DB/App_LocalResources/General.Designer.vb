@@ -101,6 +101,15 @@ Namespace Language
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Save.
+        '''</summary>
+        Public Shared ReadOnly Property Save() As String
+            Get
+                Return ResourceManager.GetString("Save", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Upload.
         '''</summary>
         Public Shared ReadOnly Property Upload() As String
